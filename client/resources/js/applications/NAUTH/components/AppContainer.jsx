@@ -12,7 +12,7 @@ class AppContainer extends Component {
     render () {
 
         return (
-            <div className="not-auth__container">
+            <div className="app-not-auth__container">
                 <Switch>
                     <Route exact path="/" render={ (props) => <LoginComponent {...props} /> } />
                     <Route path="/register" render={ (props) => <RegisterComponent{...props} /> } />
