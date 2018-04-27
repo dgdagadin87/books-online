@@ -6,7 +6,7 @@ const NODE_MODULES_PATH = path.resolve('node_modules');
 
 var config = {
     devtool: 'eval-source-map',
-    entry:  __dirname + "/client/resources/js/applications/NAUTH/Application.jsx",
+    entry:  __dirname + "/resources/js/applications/NAUTH/Application.jsx",
     output: {
         path: __dirname + "/resources/js/bundle",
         filename: "bundle.js"
