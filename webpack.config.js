@@ -44,7 +44,7 @@ var config = {
         extensions: ['', '.js', '.jsx']
     },
     devServer: {
-        contentBase: "./resources/html",
+        contentBase: "./resources/html/nauth",
         colors: true,
         historyApiFallback: true,
         inline: true
