@@ -31,6 +31,9 @@ export default function (state = initialState, action) {
             }
             return {...state, password: payload, clientErrors: {...clientErrors, password: passwordError}};
 
+        case actions.LOGIN_SET_SERVER_ERRORS:
+            return {...state, serverErrors: payload};
+
         default:
             return state;
 

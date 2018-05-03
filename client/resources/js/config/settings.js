@@ -1,6 +1,6 @@
 let defaultSettings = {
     'serverHost' : '127.0.0.1',
-    'serverPort': 9001,
+    'serverPort': 9002,
     'serverProtocol': 'http'
 };
 
@@ -12,10 +12,7 @@ let pageSettings = {
 };
 
 let urlSettings = {
-    'getCommonData'  : '/common',
-    'getBooksData'  : '/mybooks',
-    'sendToMail'     : '/sendtomail/',
-    'deleteMyBook'   : '/deletebook/'
+    'login' : '/api/login'
 };
 
 export {defaultSettings, pageSettings, urlSettings};

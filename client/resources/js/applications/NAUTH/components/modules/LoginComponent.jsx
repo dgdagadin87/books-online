@@ -2,22 +2,25 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {changeEmail, changePassword} from '../../actions/login';
+import {changeEmail, changePassword, asyncLogin} from '../../actions/login';
 
 import MenuLinkComponent from '../common/MenuLinkComponent';
 
 const mapStateToProps = (state) => {
     return {
+        disabled: state.commonData.disabled,
         email: state.loginData.email,
         password: state.loginData.password,
-        clientErrors: state.loginData.clientErrors
+        clientErrors: state.loginData.clientErrors,
+        serverErrors: state.loginData.serverErrors
     };
 };
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         changeEmail,
-        changePassword
+        changePassword,
+        asyncLogin
     }, dispatch);
 }
 
@@ -42,9 +45,36 @@ class Login extends Component {
         changePassword(value);
     }
 
+    _onClickHandler() {
+
+        const {email, password, asyncLogin} = this.props;
+
+        asyncLogin(email, password);
+    }
+
+    _renderErrorItem(error, index) {
+
+        return <div key={index} style={{color: 'red'}}>{error}</div>;
+    }
+
+    _renderServerErrors() {
+
+        const {serverErrors = []} = this.props;
+
+        if (serverErrors.length < 1) {
+            return null;
+        }
+
+        return (
+            <div>
+                {serverErrors.map((item, index) => this._renderErrorItem(item, index))}
+            </div>
+        );
+    }
+
     render() {
 
-        const {email, password, clientErrors} = this.props;
+        const {email, password, clientErrors, disabled} = this.props;
         const isButtonDisabled = !email || !password;
 
         return (
@@ -53,8 +83,10 @@ class Login extends Component {
                     Авторизация в системе
                 </div>
                 <div>
+                    {this._renderServerErrors()}
                     <div>
                         <input
+                            disabled={disabled}
                             style={clientErrors.email ? {border:'1px solid red'} : {}}
                             type="text"
                             value={email}
@@ -65,6 +97,7 @@ class Login extends Component {
                     </div>
                     <div>
                         <input
+                            disabled={disabled}
                             style={clientErrors.password ? {border:'1px solid red'} : {}}
                             type="password"
                             value={password}
@@ -88,7 +121,8 @@ class Login extends Component {
                     </div>
                     <div>
                         <button
-                            disabled={isButtonDisabled}
+                            disabled={disabled || isButtonDisabled}
+                            onClick={this._onClickHandler.bind(this)}
                         >
                             Войти
                         </button>

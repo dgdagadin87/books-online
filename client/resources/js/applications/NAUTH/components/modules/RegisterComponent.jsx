@@ -8,6 +8,7 @@ import MenuLinkComponent from '../common/MenuLinkComponent';
 
 const mapStateToProps = (state) => {
     return {
+        disabled: state.commonData.disabled,
         email: state.registerData.email,
         name: state.registerData.name,
         password: state.registerData.password,
@@ -76,7 +77,7 @@ class Login extends Component {
 
     render() {
 
-        const {email, name, password, repeatPassword, clientErrors} = this.props;
+        const {email, name, password, repeatPassword, clientErrors, disabled} = this.props;
 
         return (
             <div>
@@ -86,6 +87,7 @@ class Login extends Component {
                 <div>
                     <div>
                         <input
+                            disabled={disabled}
                             style={clientErrors.email ? {border:'1px solid red'} : {}}
                             type="text"
                             value={email}
@@ -96,6 +98,7 @@ class Login extends Component {
                     </div>
                     <div>
                         <input
+                            disabled={disabled}
                             style={clientErrors.name ? {border:'1px solid red'} : {}}
                             type="text"
                             value={name}
@@ -106,6 +109,7 @@ class Login extends Component {
                     </div>
                     <div style={{marginTop:'20px'}}>
                         <input
+                            disabled={disabled}
                             style={clientErrors.password ? {border:'1px solid red'} : {}}
                             type="password"
                             value={password}
@@ -116,6 +120,7 @@ class Login extends Component {
                     </div>
                     <div>
                         <input
+                            disabled={disabled}
                             style={clientErrors.repeatPassword ? {border:'1px solid red'} : {}}
                             type="password"
                             value={repeatPassword}
@@ -139,7 +144,7 @@ class Login extends Component {
                     </div>
                     <div>
                         <button
-                            disabled={this._isButtonDisabled()}
+                            disabled={disabled || this._isButtonDisabled()}
                         >
                             Регистрация
                         </button>
