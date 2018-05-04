@@ -5,9 +5,12 @@
   "author": "D.G.Dagadin",
   "license": "ISC",
   "scripts": {
-    "start": "webpack-dev-server --progress --port=8007",
-    "dev": "set NODE_ENV=development&&webpack --progress --colors --config=./webpack.config.js",
-    "build": "set NODE_ENV=production&&webpack --progress --colors --config=./webpack.config.js"
+    "start:nth": "webpack-dev-server --progress --port=8007 --config=./webpack.config.nth.js",
+    "dev:nth": "set NODE_ENV=development&&webpack --progress --colors --config=./webpack.config.nth.js",
+    "build:nth": "set NODE_ENV=production&&webpack --progress --colors --config=./webpack.config.nth.js",
+    "start:auth": "webpack-dev-server --progress --port=8007 --config=./webpack.config.auth.js",
+    "dev:auth": "set NODE_ENV=development&&webpack --progress --colors --config=./webpack.config.auth.js",
+    "build:auth": "set NODE_ENV=production&&webpack --progress --colors --config=./webpack.config.auth.js"
   },
   "devDependencies": {
     "babel-core": "~6.7.*",
