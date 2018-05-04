@@ -40,10 +40,9 @@ export const asyncRegister = (email, name, password, repeatPassword) => {
         })
         .catch((error) => {
             console.log('error', error);
-            dispatch({
-                type: actions.COMMON_NAUTH_DISABLED,
-                payload: false
-            });
+            const {message} = error;
+            dispatch({ type: actions.COMMON_NAUTH_DISABLED, payload: false });
+            dispatch({ type: actions.COMMON_ADD_GLOBAL_ERROR, payload: message });
         });
 
     }

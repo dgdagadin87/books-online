@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import ModalComponent from '../components/ModalComponent';
+import {bindActionCreators} from 'redux';
+import actions from '../../config/actions';
 
 const mapStateToProps = (state) => {
     return {
@@ -9,7 +11,23 @@ const mapStateToProps = (state) => {
     };
 };
 
+function matchDispatchToProps(dispatch) {
+    return bindActionCreators({
+        clearErrors: () => ({
+            type: actions.COMMON_CLEAR_GLOBAL_ERRORS,
+            payload: null
+        })
+    }, dispatch);
+}
+
 class ErrorModalWindow extends Component {
+
+    _clearClickHandler() {
+
+        const {clearErrors} = this.props;
+
+        clearErrors();
+    }
 
     _renderError(error, index) {
 
@@ -31,6 +49,9 @@ class ErrorModalWindow extends Component {
                 <div style={{display:'table-cell', verticalAlign:'middle'}}>
                     <div style={{background: '#ffffff', width:'200px', margin:'auto'}}>
                         {errors.map((error, index) => this._renderError(error, index))}
+                        <div>
+                            <button onClick={this._clearClickHandler.bind(this)}>Закрыть</button>
+                        </div>
                     </div>
                 </div>
             </ModalComponent>
@@ -39,4 +60,4 @@ class ErrorModalWindow extends Component {
 
 }
 
-export default connect(mapStateToProps)(ErrorModalWindow);
+export default connect(mapStateToProps, matchDispatchToProps)(ErrorModalWindow);

@@ -5,7 +5,7 @@ import LoginComponent from './modules/LoginComponent';
 import RegisterComponent from './modules/RegisterComponent';
 import ResetComponent from './modules/ResetPasswordComponent';
 
-import ErrorWindow from '../../../ui/modules/ErrorComponent';
+import ErrorWindow from '../../../ui/modules/ErrorModule';
 
 class AppContainer extends Component {
 
