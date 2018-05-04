@@ -12,7 +12,8 @@ let pageSettings = {
 };
 
 let urlSettings = {
-    'login' : '/api/login'
+    'login'    : '/api/login',
+    'register' : '/api/register'
 };
 
 export {defaultSettings, pageSettings, urlSettings};

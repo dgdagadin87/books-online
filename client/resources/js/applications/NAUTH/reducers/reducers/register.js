@@ -2,6 +2,7 @@ import actions from '../../../../config/actions';
 import {checkEmail} from '../../../../core/coreUtils';
 
 const initialState = {
+    step: 'start',
     email: '',
     name: '',
     password: '',
@@ -64,6 +65,12 @@ export default function (state = initialState, action) {
                 }
             }
             return {...state, repeatPassword: payload, clientErrors: {...clientErrors, repeatPassword: repeatPasswordError}};
+
+        case actions.REGISTER_SET_SERVER_ERRORS:
+            return {...state, serverErrors: payload};
+
+        case actions.REGISTER_SET_CURRENT_STEP:
+            return {...state, step: payload};
 
         default:
             return state;

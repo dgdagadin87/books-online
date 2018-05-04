@@ -2,7 +2,13 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {changeEmail, changeName, changePassword, changeRepeatPassword} from '../../actions/register';
+import {
+    changeEmail,
+    changeName,
+    changePassword,
+    changeRepeatPassword,
+    asyncRegister
+} from '../../actions/register';
 
 import MenuLinkComponent from '../common/MenuLinkComponent';
 
@@ -13,7 +19,9 @@ const mapStateToProps = (state) => {
         name: state.registerData.name,
         password: state.registerData.password,
         repeatPassword: state.registerData.repeatPassword,
-        clientErrors: state.registerData.clientErrors
+        clientErrors: state.registerData.clientErrors,
+        serverErrors: state.registerData.serverErrors,
+        step: state.registerData.step
     };
 };
 
@@ -22,7 +30,8 @@ function matchDispatchToProps(dispatch) {
         changeEmail,
         changeName,
         changePassword,
-        changeRepeatPassword
+        changeRepeatPassword,
+        asyncRegister
     }, dispatch);
 }
 
@@ -75,7 +84,34 @@ class Login extends Component {
         return hasErrors || hasInputErrors;
     }
 
-    render() {
+    _onClickHandler() {
+
+        const {email, name, password, repeatPassword, asyncRegister} = this.props;
+
+        asyncRegister(email, name, password, repeatPassword);
+    }
+
+    _renderErrorItem(error, index) {
+
+        return <div key={index} style={{color: 'red'}}>{error}</div>;
+    }
+
+    _renderServerErrors() {
+
+        const {serverErrors = []} = this.props;
+
+        if (serverErrors.length < 1) {
+            return null;
+        }
+
+        return (
+            <div>
+                {serverErrors.map((item, index) => this._renderErrorItem(item, index))}
+            </div>
+        );
+    }
+
+    _renderForm() {
 
         const {email, name, password, repeatPassword, clientErrors, disabled} = this.props;
 
@@ -85,6 +121,7 @@ class Login extends Component {
                     Регистрация в системе
                 </div>
                 <div>
+                    {this._renderServerErrors()}
                     <div>
                         <input
                             disabled={disabled}
@@ -145,6 +182,7 @@ class Login extends Component {
                     <div>
                         <button
                             disabled={disabled || this._isButtonDisabled()}
+                            onClick={this._onClickHandler.bind(this)}
                         >
                             Регистрация
                         </button>
@@ -153,6 +191,23 @@ class Login extends Component {
             </div>
         );
     }
+
+    _renderMessage() {
+
+        const enterLink = (<MenuLinkComponent activeOnlyWhenExact={true} to={'/'} label={'Войти'} />);
+
+        return (
+            <div>Регистрация завершена успешно. Вы можете {enterLink}, используя введенные ранее почту и пароль.</div>
+        );
+    }
+
+    render() {
+
+        const {step} = this.props;
+
+        return step === 'final' ? this._renderMessage() : this._renderForm();
+    }
+
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(Login);
