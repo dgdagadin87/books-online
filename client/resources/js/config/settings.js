@@ -13,7 +13,8 @@ let pageSettings = {
 
 let urlSettings = {
     'login'    : '/api/login',
-    'register' : '/api/register'
+    'register' : '/api/register',
+    'reset'    : '/api/reset'
 };
 
 export {defaultSettings, pageSettings, urlSettings};

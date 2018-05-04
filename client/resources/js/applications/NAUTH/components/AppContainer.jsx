@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import LoginComponent from './modules/LoginComponent';
 import RegisterComponent from './modules/RegisterComponent';
-import ResetComponent from './modules/ResetComponent';
+import ResetComponent from './modules/ResetPasswordComponent';
 
 class AppContainer extends Component {
 
