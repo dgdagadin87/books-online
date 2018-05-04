@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import {bindActionCreators} from 'redux';
 import { Route, Switch } from 'react-router-dom';
 
 import LoginComponent from './modules/LoginComponent';
 import RegisterComponent from './modules/RegisterComponent';
 import ResetComponent from './modules/ResetPasswordComponent';
+
+import ErrorWindow from '../../../ui/modules/ErrorComponent';
 
 class AppContainer extends Component {
 
@@ -18,6 +18,7 @@ class AppContainer extends Component {
                     <Route path="/register" render={ (props) => <RegisterComponent{...props} /> } />
                     <Route path="/reset" render={ (props) => <ResetComponent {...props} /> } />
                 </Switch>
+                <ErrorWindow />
             </div>
         );
     }
