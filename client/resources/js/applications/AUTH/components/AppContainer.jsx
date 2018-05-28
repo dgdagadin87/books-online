@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Request from '../../../core/request';
-import {createUrl} from '../../../core/coreUtils';
-import {defaultSettings, urlSettings} from '../../../config/settings';
-
 import HeaderComponent from './common/HeaderComponent';
 import FooterComponent from './common/FooterComponent';
 import TitleComponent from './common/TitleComponent';
@@ -21,10 +17,12 @@ class AppContainer extends Component {
 
     render () {
 
+        const {commonData} = this.props;
+
         return (
             <div className="app-auth__container">
                 <div className="app-auth__center">
-                    <HeaderComponent serverData={{user: {userName:'Имя пользователя', userIsAdmin: true}}} />
+                    <HeaderComponent serverData={commonData} />
                     <TitleComponent />
                     <Switch>
                         <Route exact path="/" render={ (props) => <BooksComponent {...props} /> } />

@@ -1,42 +1,24 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
-import PropTypes from 'prop-types';
+const mapStateToProps = (state) => {
+    return {
+        applicationTitle: state.commonData.title
+    };
+};
 
 class TitleComponent extends Component {
 
-    constructor(props) {
-        super(props);
-        
-        const {title = ''} = props;
-        
-        this.state = {
-            title: title
-        };
-    }
-
-    componentWillReceiveProps(props) {
-        
-        const {title} = props;
-        
-        this.setState({
-            title: title
-        });
-    }
-
     render() {
 
-        const {title = 'Просто раздел'} = this.state;
+        const {applicationTitle} = this.props;
 
         return (
             <div className="main-title">
-                Раздел {'"' + title + '"'}
+                Раздел {'"' + applicationTitle + '"'}
             </div>
         );
     }
-};
+}
 
-TitleComponent.propTypes = {
-    title: PropTypes.string
-};
-
-export default TitleComponent;
+export default connect(mapStateToProps)(TitleComponent);

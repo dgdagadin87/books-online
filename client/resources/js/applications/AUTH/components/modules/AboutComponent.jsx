@@ -1,11 +1,27 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+
+import {changeTitle} from '../../actions/common';
 
 const mapStateToProps = () => {
     return {};
 };
 
+function mapDispatchToProps(dispatch) {
+
+    return bindActionCreators({
+        changeTitle: changeTitle
+    }, dispatch);
+}
+
 class About extends Component {
+
+    componentDidMount () {
+
+        const {changeTitle} = this.props;
+        changeTitle('О программе');
+    }
 
     render() {
 
@@ -17,4 +33,4 @@ class About extends Component {
     }
 }
 
-export default connect(mapStateToProps)(About);
+export default connect(mapStateToProps, mapDispatchToProps)(About);

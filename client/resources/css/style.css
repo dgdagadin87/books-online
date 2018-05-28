@@ -77,10 +77,9 @@ body {
     padding: 15px 15px;
     color: #ffffff;
     font-weight: 400;
-    font: 15px/15px Verdana,"Helvetica Neue Light",Arial,Tahoma,sans-serif;
-    font-size: 14px;
+    font: 13px/13px Verdana,"Helvetica Neue Light",Arial,Tahoma,sans-serif;
     text-decoration: none;
-    /*text-shadow: 1px 1px 1px black, 0 0 1em #000000;*/
+    text-transform: uppercase;
 }
 .main-navigation__active a {
     text-decoration: none !important;
@@ -99,6 +98,34 @@ body {
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 0 0 0px 0px;
+}
+
+.header__popup-window {
+    border:1px solid #999;
+    width:140px;
+    height:60px;
+    z-index:20;
+    position:absolute;
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    border-radius: 3px;
+    top:35px;
+    right:10px;
+    background:#ffffff;
+    font-family: "Helvetica New",Arial,sans-serif;
+    text-align: left !important;
+    color: #333;
+    padding: 5px;
+}
+.header__popup-window a {
+    color: #333;
+    font-size: 14px;
+}
+.header__popup-window a:hover {
+    text-decoration: none;
+}
+
+.clear-both {
+    clear: both;
 }
 
 .main-footer {
@@ -137,9 +164,7 @@ body {
     top:5px;
 }
 .under-footer .left-one > div,
-.under-footer .right-one > div {
-    /* margin-top:3px;*/
-}
+.under-footer .right-one > div {}
 .under-footer .right-one > div {
     text-align:right;
 }

@@ -1,16 +1,21 @@
 import actions from '../../../../config/actions';
 
 const initialState = {
-    disabled: false,
-    errors: []
+    userData: {},
+    errors: [],
+    title: 'Приложение "Книги" - начало'
 };
 
 export default function (state = initialState, action) {
 
     switch (action.type) {
 
-        case actions.COMMON_SET_SERVER_DATA:
-            return {...state, disabled: action.payload};
+        case actions.COMMON_SET_USER_DATA:
+            return {...state, userData: action.payload};
+
+        case actions.COMMON_SET_TITLE:
+            document.title = action.payload;
+            return {...state, title: action.payload};
 
         case actions.COMMON_ADD_GLOBAL_ERROR:
             const {errors} = state;

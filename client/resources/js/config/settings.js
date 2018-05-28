@@ -12,6 +12,7 @@ let pageSettings = {
 };
 
 let urlSettings = {
+    'common'   : '/api/common',
     'login'    : '/api/login',
     'register' : '/api/register',
     'reset'    : '/api/reset'
