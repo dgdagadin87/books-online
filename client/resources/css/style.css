@@ -76,8 +76,8 @@ body {
     display: block;
     padding: 15px 15px;
     color: #ffffff;
-    font-weight: 400;
-    font: 13px/13px Verdana,"Helvetica Neue Light",Arial,Tahoma,sans-serif;
+    font-weight: bold;
+    font: 13px/13px "Georgia","Helvetica Neue Light",Arial,Tahoma,sans-serif;
     text-decoration: none;
     text-transform: uppercase;
 }
@@ -181,4 +181,34 @@ body {
     width:100px;
     text-align:center;
     margin:7px auto 0;
+}
+
+.main-addnewbook__container {
+    width: 990px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.main-statistics__container {
+    width: 990px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.main-profile__container {
+    width: 990px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.main-notifications__container {
+    width: 990px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.main-about__container {
+    width: 990px;
+    margin: auto;
+    margin-top: 20px;
 }

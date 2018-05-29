@@ -26,7 +26,7 @@ class Statistics extends Component {
     render() {
 
         return (
-            <div>
+            <div className="main-statistics__container">
                 Статистика - можно посмотреть здесь.
             </div>
         );

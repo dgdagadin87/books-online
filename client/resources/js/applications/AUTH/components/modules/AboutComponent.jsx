@@ -26,7 +26,7 @@ class About extends Component {
     render() {
 
         return (
-            <div>
+            <div className="main-about__container">
                 О программе - полное описание здесь.
             </div>
         );

@@ -26,7 +26,7 @@ class Notifications extends Component {
     render() {
 
         return (
-            <div>
+            <div className="main-notifications__container">
                 Уведомления - можно посмотреть здесь.
             </div>
         );

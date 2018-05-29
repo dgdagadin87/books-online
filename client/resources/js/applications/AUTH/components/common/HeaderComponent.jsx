@@ -27,7 +27,7 @@ class Header extends Component {
 
     _handlerHidePopup(ev) {
 
-        if ($(ev.target).hasClass('popup-prevent')) {
+        if (ev.target.classList.contains('popup-prevent')) {
             return;
         }
 

@@ -23,7 +23,6 @@ class AppContainer extends Component {
             <div className="app-auth__container">
                 <div className="app-auth__center">
                     <HeaderComponent serverData={commonData} />
-                    <TitleComponent />
                     <Switch>
                         <Route exact path="/" render={ (props) => <BooksComponent {...props} /> } />
                         <Route path="/statistics" render={ (props) => <StatisticsComponent{...props} /> } />

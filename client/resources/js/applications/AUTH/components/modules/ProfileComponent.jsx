@@ -26,7 +26,7 @@ class Profile extends Component {
     render() {
 
         return (
-            <div>
+            <div className="main-profile__container">
                 Профиль - можно отредактировать здесь.
             </div>
         );

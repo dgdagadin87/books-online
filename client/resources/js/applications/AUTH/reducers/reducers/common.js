@@ -14,7 +14,7 @@ export default function (state = initialState, action) {
             return {...state, userData: action.payload};
 
         case actions.COMMON_SET_TITLE:
-            document.title = action.payload;
+            document.title = 'Приложение "Книги" - раздел "' + action.payload + '"';
             return {...state, title: action.payload};
 
         case actions.COMMON_ADD_GLOBAL_ERROR:

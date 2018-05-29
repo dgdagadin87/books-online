@@ -28,7 +28,7 @@ class Books extends Component {
     render() {
 
         return (
-            <div>
+            <div className="main-addnewbook__container">
                 Книги - можно выбрать здесь.
             </div>
         );
