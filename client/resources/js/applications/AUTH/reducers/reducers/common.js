@@ -2,6 +2,7 @@ import actions from '../../../../config/actions';
 
 const initialState = {
     userData: {},
+    sitesData: [],
     errors: [],
     title: 'Приложение "Книги" - начало'
 };
