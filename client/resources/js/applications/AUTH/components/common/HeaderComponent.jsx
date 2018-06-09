@@ -66,7 +66,7 @@ class Header extends Component {
                 key={0}
                 activeOnlyWhenExact={true}
                 to={'/'}
-                label={'Книги'}
+                label={'Мои книги'}
             />
         );
 
@@ -74,8 +74,8 @@ class Header extends Component {
             <MenuLinkComponent
                 key={1}
                 activeOnlyWhenExact={false}
-                to={'/statistics'}
-                label={'Статистика'}
+                to={'/allbooks'}
+                label={'Все книги'}
             />
         );
 
@@ -83,8 +83,8 @@ class Header extends Component {
             <MenuLinkComponent
                 key={2}
                 activeOnlyWhenExact={false}
-                to={'/profile'}
-                label={'Профиль'}
+                to={'/addbook'}
+                label={'Добавить книгу'}
             />
         );
 
@@ -92,8 +92,8 @@ class Header extends Component {
             <MenuLinkComponent
                 key={3}
                 activeOnlyWhenExact={false}
-                to={'/notifications'}
-                label={'Уведомления'}
+                to={'/users'}
+                label={'Пользователи'}
             />
         );
 
