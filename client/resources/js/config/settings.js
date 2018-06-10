@@ -15,7 +15,10 @@ let urlSettings = {
     'common'   : '/api/common',
     'login'    : '/api/login',
     'register' : '/api/register',
-    'reset'    : '/api/reset'
+    'reset'    : '/api/reset',
+
+    'myBooks'  : '/api/mybooks',
+    'toMail'   : '/api/sendToMail'
 };
 
 export {defaultSettings, pageSettings, urlSettings};
