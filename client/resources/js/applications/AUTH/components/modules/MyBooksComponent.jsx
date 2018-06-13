@@ -18,6 +18,7 @@ import PagingComponent from '../partials/PagingComponent';
 
 const mapStateToProps = state => {
     return {
+        userData: state.commonData.userData,
         collection: state.myBooksData.collection,
         sortField: state.myBooksData.sortField,
         sortType: state.myBooksData.sortType,
@@ -105,7 +106,9 @@ class Books extends Component {
 
     _renderMyBooks() {
 
-        const {history} = this.props;
+        const {history, userData} = this.props;
+        const {user = {}} = userData;
+        const {userIsAdmin = false} = user;
 
         const {
             disabled,
@@ -134,7 +137,7 @@ class Books extends Component {
             <TableComponent
                 key={1}
                 routerHistory={history}
-                isAdmin={true}
+                isAdmin={userIsAdmin}
                 items={!collection ? [] : collection}
                 showCheckColumn={true}
                 totalCount={totalCount}
