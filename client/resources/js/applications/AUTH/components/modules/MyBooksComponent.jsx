@@ -41,7 +41,7 @@ function matchDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-class Books extends Component {
+class MyBooks extends Component {
 
     componentDidMount() {
 
@@ -210,4 +210,4 @@ class Books extends Component {
     }
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(Books);
+export default connect(mapStateToProps, matchDispatchToProps)(MyBooks);
