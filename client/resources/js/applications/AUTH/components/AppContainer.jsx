@@ -10,6 +10,7 @@ import AllBooksComponent from './modules/AllBooksComponent';
 import AddBookComponent from './modules/AddBookComponent';
 import UsersComponent from './modules/UsersComponent';
 import AboutComponent from './modules/AboutComponent';
+import NotFoundComponent from './modules/NotFoundComponent';
 
 import ErrorWindow from '../../../ui/modules/ErrorModule';
 
@@ -30,6 +31,9 @@ class AppContainer extends Component {
                         <Route path="/addbook" render={ (props) => <AddBookComponent {...props} /> } />
                         <Route path="/users" render={ (props) => <UsersComponent {...props} /> } />
                         <Route path="/about" render={ (props) => <AboutComponent {...props} /> } />
+                        <Route
+                            component={NotFoundComponent}
+                        />
                     </Switch>
                 </div>
                 <FooterComponent />

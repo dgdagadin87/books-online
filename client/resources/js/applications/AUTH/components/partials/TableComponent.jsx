@@ -297,7 +297,7 @@ class TableComponent extends Component {
                     </div>
                     <div className="table__panel-cell-right">
                         <button type="button" onClick={()=>{
-                            routerHistory.push('/about');
+                            routerHistory.push('/addbook');
                         }}>Добавить книгу</button>
                     </div>
                 </td>
@@ -331,7 +331,7 @@ class TableComponent extends Component {
             </div>
         );
     }
-};
+}
 
 TableComponent.propTypes = {
     controlMode: PropTypes.string.isRequired,
