@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 import PropTypes from 'prop-types';
 
-import {pageSettings as currentSettings} from '../../config/settings';
+import {pageSettings as currentSettings} from '../../../../config/settings';
 
 class PagingComponent extends Component {
 

@@ -9,7 +9,7 @@ export default class PreloaderComponent extends Component {
         return (
             <div className="main-preloader__large">
                 <div className="preloader">
-                    <span className="image"></span>
+                    <span className="image"/>
                     <span className="text">Загрузка...</span>
                 </div>
             </div>

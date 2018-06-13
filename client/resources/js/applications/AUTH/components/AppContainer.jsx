@@ -23,6 +23,7 @@ class AppContainer extends Component {
             <div className="main-container">
                 <div className="main-center">
                     <HeaderComponent serverData={commonData} />
+                    <TitleComponent />
                     <Switch>
                         <Route exact path="/" render={ (props) => <MyBooksComponent {...props} /> } />
                         <Route path="/allbooks" render={ (props) => <AllBooksComponent{...props} /> } />

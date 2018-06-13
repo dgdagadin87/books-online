@@ -14,35 +14,25 @@ export const asyncGetMyBooks = (collection, actionData, queryData) => {
         });
 
         Request.send({
-            url: createUrl(defaultSettings, urlSettings['myBooks'])
+            url: createUrl(defaultSettings, urlSettings['myBooks']),
             data: JSON.stringify({...queryData, ...actionData})
         })
         .then( (response) => {
 
-            const responseData = response.data || {};
-
-            if (!response.isSuccess) {
-                const {message} = response;
-                dispatch({ type: actions.MY_BOOKS_STOP_LOADING, payload: null });
-                dispatch({ type: actions.COMMON_ADD_GLOBAL_ERROR, payload: message });
-                return;
-            }
-
-            const {data: {data = {}}} = response;
-            const {collection = [], filter = {}, paging = {}} = data;
+            const {collection = [], filter = {}, paging = {}} = response;
 
             dispatch({
-                type: 'MY_BOOKS_LIST_LOADED',
+                type: actions.MY_BOOKS_STOP_LOADING,
                 payload: {collection, ...filter, ...paging}
             })
         })
         .catch((error) => {
             console.log('error', error);
-            const {message} = error;
+            const {message, statusText} = error;
+            const errorMessage = statusText ? statusText : message;
             dispatch({ type: actions.MY_BOOKS_STOP_LOADING, payload: null });
-            dispatch({ type: actions.COMMON_ADD_GLOBAL_ERROR, payload: message });
+            dispatch({ type: actions.COMMON_ADD_GLOBAL_ERROR, payload: errorMessage });
         });
-
     }
 };
 
@@ -57,20 +47,16 @@ export const asyncSendMyBookToMail = (bookId, emailToSend) => {
                 email: emailToSend
             })
         })
-        .then( (response) => {
-
-            if (!response.isSuccess) {
-                const {message} = response;
-                dispatch({ type: actions.COMMON_ADD_GLOBAL_ERROR, payload: message });
-                return;
-            }
+        .then( () => {
 
             alert('Книга успешно отправлена по почте.');
         })
         .catch((error) => {
 
-            const {message = ''} = error;
-            dispatch({ type: actions.COMMON_ADD_GLOBAL_ERROR, payload: message });
+            console.log('error', error);
+            const {message, statusText} = error;
+            const errorMessage = statusText ? statusText : message;
+            dispatch({ type: actions.COMMON_ADD_GLOBAL_ERROR, payload: errorMessage });
         });
 
     }
@@ -82,37 +68,25 @@ export const asyncDeleteMyBook = (bookId, loadBooksCallback) => {
         const urlToSend = `${createUrl(defaultSettings, urlSettings['deleteMyBook'])}${bookId}`;
 
         dispatch({
-            type: 'START_BOOKS_LOADING',
+            type: actions.MY_BOOKS_START_LOADING,
             payload: {}
         });
 
-        Axios.get(urlToSend)
-            .then( (response) => {
+        Request.get({
+            url: urlToSend
+        })
+        .then( () => {
 
-                const responseData = response.data || {};
+            alert('Книга успешно удалена.');
+            loadBooksCallback();
+        })
+        .catch((error) => {
 
-                if (!responseData.isSuccess) {
-                    dispatch({
-                        type: 'ERROR_BOOKS_LOADING',
-                        payload: {
-                            errorMessage: responseData.message
-                        }
-                    });
-                    return;
-                }
-
-                alert('Книга успешно удалена.');
-                loadBooksCallback();
-            })
-            .catch((error) => {
-
-                const {message = ''} = error;
-                dispatch({
-                    type: 'ERROR_BOOKS_LOADING',
-                    payload: {
-                        errorMessage: message
-                    }
-                });
-            });
+            console.log('error', error);
+            const {message, statusText} = error;
+            const errorMessage = statusText ? statusText : message;
+            dispatch({ type: actions.MY_BOOKS_STOP_LOADING, payload: null });
+            dispatch({ type: actions.COMMON_ADD_GLOBAL_ERROR, payload: errorMessage });
+        });
     }
 };

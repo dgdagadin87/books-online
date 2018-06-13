@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import PropTypes from 'prop-types';
 
-import {emptyFunction} from '../../core/coreUtils';
+import {emptyFunction} from '../../../../core/coreUtils';
 
 import RowComponent from './TableRowComponent';
 import PreloaderComponent from './SmallPreloaderComponent';

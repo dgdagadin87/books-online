@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import PropTypes from 'prop-types';
 
-import {checkEmail} from '../../core/coreUtils';
+import {checkEmail} from '../../../../core/coreUtils';
 
 class SendToMailComponent extends Component {
 

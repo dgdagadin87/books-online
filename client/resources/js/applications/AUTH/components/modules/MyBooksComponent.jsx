@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import {pageSettings} from '../../../../config/settings';
 
-import { setTitle } from '../../actions/common';
+import { changeTitle } from '../../actions/common';
 import {
     asyncGetMyBooks,
     asyncSendMyBookToMail,
@@ -33,10 +33,10 @@ const mapStateToProps = state => {
 function matchDispatchToProps(dispatch) {
 
     return bindActionCreators({
-        setTitle: setTitle,
-        asyncLoadBooks: asyncGetBooks,
-        asyncSendBookToMail: asyncSendBookToMail,
-        asyncDeleteBook: asyncDeleteBook
+        setTitle: changeTitle,
+        asyncLoadBooks: asyncGetMyBooks,
+        asyncSendBookToMail: asyncSendMyBookToMail,
+        asyncDeleteBook: asyncDeleteMyBook
     }, dispatch);
 }
 
@@ -184,8 +184,8 @@ class Books extends Component {
             <PagingComponent
                 key={2}
                 pageSettings={pageSettings}
-                page={page}
-                pages={pages}
+                page={page || 1}
+                pages={pages || 1}
                 disabled={disabled}
                 onChange={this._onPageChange.bind(this)}
                 onRefresh={this._loadData.bind(this)}

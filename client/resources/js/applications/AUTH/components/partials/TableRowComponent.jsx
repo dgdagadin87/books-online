@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 
 import PropTypes from 'prop-types';
 
-import {createUrl as CUL} from '../../core/coreUtils';
-import {defaultSettings, urlSettings} from '../../config/settings';
+import {createUrl as CUL} from '../../../../core/coreUtils';
+import {defaultSettings, urlSettings} from '../../../../config/settings';
 
 import DescriptionComponent from './DescriptionComponent';
 import SendToMailComponent from './SendToMailComponent';
