@@ -74,7 +74,7 @@ class SearchComponent extends Component {
         const {disabled, searchTerm, isError} = this.state;
 
         return (
-            <div className={'main-search__container' + (mode === 'strict' ? ' short' : '')} style={{margin:'auto'}}>
+            <div className={'main-search__container' + (mode === 'strict' ? ' short' : '')}>
                 <div className="main-search__text-field-container">
                     <input
                         type="text"

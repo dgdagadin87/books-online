@@ -31,9 +31,7 @@ class AppContainer extends Component {
                         <Route path="/addbook" render={ (props) => <AddBookComponent {...props} /> } />
                         <Route path="/users" render={ (props) => <UsersComponent {...props} /> } />
                         <Route path="/about" render={ (props) => <AboutComponent {...props} /> } />
-                        <Route
-                            component={NotFoundComponent}
-                        />
+                        <Route component={NotFoundComponent} />
                     </Switch>
                 </div>
                 <FooterComponent />
