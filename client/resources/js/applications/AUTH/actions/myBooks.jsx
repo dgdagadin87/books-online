@@ -43,6 +43,7 @@ export const asyncSendMyBookToMail = (bookId, emailToSend) => {
 
         Request.send({
             url: urlToSend,
+            type: 'post',
             data: JSON.stringify({
                 email: emailToSend
             })
@@ -72,7 +73,7 @@ export const asyncDeleteMyBook = (bookId, loadBooksCallback) => {
             payload: {}
         });
 
-        Request.get({
+        Request.send({
             url: urlToSend
         })
         .then( () => {

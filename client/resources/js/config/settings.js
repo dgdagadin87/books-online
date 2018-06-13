@@ -12,13 +12,15 @@ let pageSettings = {
 };
 
 let urlSettings = {
-    'common'   : '/api/common',
-    'login'    : '/api/login',
-    'register' : '/api/register',
-    'reset'    : '/api/reset',
+    'common'       : '/api/common',
+    'login'        : '/api/login',
+    'register'     : '/api/register',
+    'reset'        : '/api/reset',
 
-    'myBooks'  : '/api/mybooks',
-    'toMail'   : '/api/sendToMail'
+    'myBooks'      : '/api/mybooks',
+    'toMail'       : '/api/sendtomail/',
+    'downloadBook' : '/api/download/',
+    'deleteMyBook' : '/api/deletemybook/',
 };
 
 export {defaultSettings, pageSettings, urlSettings};
