@@ -47,7 +47,7 @@ class MyBooks extends Component {
 
         let {setTitle, collection, globalLoading, disabled} = this.props;
 
-        setTitle('Список книг');
+        setTitle('Мои книги');
 
         if (collection === false && (!globalLoading && !disabled)) {
             this._loadData();

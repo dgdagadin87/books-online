@@ -18,9 +18,11 @@ let urlSettings = {
     'reset'        : '/api/reset',
 
     'myBooks'      : '/api/mybooks',
+    'allBooks'     : '/api/allbooks',
     'toMail'       : '/api/sendtomail/',
     'downloadBook' : '/api/download/',
     'deleteMyBook' : '/api/deletemybook/',
+    'deleteBook'   : '/api/deletebook/',
 };
 
 export {defaultSettings, pageSettings, urlSettings};
