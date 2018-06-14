@@ -15,7 +15,7 @@ export default function (state = null, action) {
     let returnState = !!state ? state : initialState;
 
     switch (action.type) {
-        case actions.USERS_STOP_LOADING:
+        case actions.ADD_USER_STOP_LOADING:
             return {...returnState, ...payload, disabled: false};
         case actions.ADD_USER_START_LOADING:
             return {...returnState, disabled: true, errorText: ''};
