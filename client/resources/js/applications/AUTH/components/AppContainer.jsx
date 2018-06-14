@@ -9,6 +9,7 @@ import MyBooksComponent from './modules/MyBooksComponent';
 import AllBooksComponent from './modules/AllBooksComponent';
 import AddBookComponent from './modules/AddBookComponent';
 import UsersComponent from './modules/UsersComponent';
+import AddUserComponent from './modules/AddUserComponent';
 import AboutComponent from './modules/AboutComponent';
 import NotFoundComponent from './modules/NotFoundComponent';
 
@@ -29,7 +30,12 @@ class AppContainer extends Component {
                         <Route exact path="/" render={ (props) => <MyBooksComponent {...props} /> } />
                         <Route path="/allbooks" render={ (props) => <AllBooksComponent{...props} /> } />
                         <Route path="/addbook" render={ (props) => <AddBookComponent {...props} /> } />
-                        <Route path="/users" render={ (props) => <UsersComponent {...props} /> } />
+                        <Route path="/users">
+                            <Switch>
+                                <Route path="/users/adduser" render={ (props) => <AddUserComponent {...props} /> } />
+                                <Route exact path="/users" render={ (props) => <UsersComponent {...props} /> } />
+                            </Switch>
+                        </Route>
                         <Route path="/about" render={ (props) => <AboutComponent {...props} /> } />
                         <Route component={NotFoundComponent} />
                     </Switch>

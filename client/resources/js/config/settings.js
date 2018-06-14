@@ -24,6 +24,7 @@ let urlSettings = {
     'downloadBook' : '/api/download/',
     'deleteMyBook' : '/api/deletemybook/',
     'deleteBook'   : '/api/deletebook/',
+    'addUser'      : '/api/adduser',
     'deleteUser'   : '/api/deleteuser/',
 };
 
