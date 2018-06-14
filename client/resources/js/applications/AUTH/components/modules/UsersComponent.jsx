@@ -150,8 +150,8 @@ class UsersComponent extends Component {
             <PagingComponent
                 key={2}
                 pageSettings={pageSettings}
-                page={page}
-                pages={pages}
+                page={page || 1}
+                pages={pages || 1}
                 disabled={disabled}
                 onChange={this._onPageChange.bind(this)}
                 onRefresh={this._loadData.bind(this)}
@@ -177,9 +177,7 @@ class UsersComponent extends Component {
         const {userIsAdmin = false} = user;
 
         return (
-            <div>
-                {userIsAdmin ? this._renderUsers() : this._renderNoAccess()}
-            </div>
+            <div>{userIsAdmin ? this._renderUsers() : this._renderNoAccess()}</div>
         );
     }
 }
