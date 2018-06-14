@@ -19,6 +19,7 @@ let urlSettings = {
 
     'myBooks'      : '/api/mybooks',
     'allBooks'     : '/api/allbooks',
+    'users'        : '/api/users',
     'toMail'       : '/api/sendtomail/',
     'downloadBook' : '/api/download/',
     'deleteMyBook' : '/api/deletemybook/',

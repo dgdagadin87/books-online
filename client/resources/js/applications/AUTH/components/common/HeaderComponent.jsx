@@ -59,6 +59,10 @@ class Header extends Component {
 
     _renderHeaderUrls() {
 
+        const {serverData} = this.state;
+        const {user = {}} = serverData;
+        const {userIsAdmin = false} = user;
+
         let menuLinks = [];
 
         menuLinks.push(
@@ -88,14 +92,16 @@ class Header extends Component {
             />
         );
 
-        menuLinks.push(
-            <MenuLinkComponent
-                key={3}
-                activeOnlyWhenExact={false}
-                to={'/users'}
-                label={'Пользователи'}
-            />
-        );
+        if (userIsAdmin) {
+            menuLinks.push(
+                <MenuLinkComponent
+                    key={3}
+                    activeOnlyWhenExact={false}
+                    to={'/users'}
+                    label={'Пользователи'}
+                />
+            );
+        }
 
         menuLinks.push(
             <MenuLinkComponent
