@@ -158,11 +158,7 @@ class UsersComponent extends Component {
             />
         );
 
-        return (
-            <div>
-                {globalLoading ? <PreloaderComponent /> : usersArray}
-            </div>
-        );
+        return (<div>{globalLoading ? <PreloaderComponent /> : usersArray}</div>);
     }
 
     _renderNoAccess() {
@@ -176,9 +172,7 @@ class UsersComponent extends Component {
         const {user = {}} = userData;
         const {userIsAdmin = false} = user;
 
-        return (
-            <div>{userIsAdmin ? this._renderUsers() : this._renderNoAccess()}</div>
-        );
+        return (<div>{userIsAdmin ? this._renderUsers() : this._renderNoAccess()}</div>);
     }
 }
 
