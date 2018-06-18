@@ -3,6 +3,7 @@ import myBooks from './reducers/myBooks';
 import allBooks from './reducers/allBooks';
 import users from './reducers/users';
 import addUser from './reducers/addUser';
+import editUser from './reducers/editUser';
 
 import common from './reducers/common';
 
@@ -11,7 +12,8 @@ const allReducers = combineReducers({
     myBooksData: myBooks,
     allBooksData: allBooks,
     usersData: users,
-    addUserData: addUser
+    addUserData: addUser,
+    editUserData: editUser
 });
 
 export default allReducers;

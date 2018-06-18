@@ -10,6 +10,7 @@ import AllBooksComponent from './modules/AllBooksComponent';
 import AddBookComponent from './modules/AddBookComponent';
 import UsersComponent from './modules/UsersComponent';
 import AddUserComponent from './modules/AddUserComponent';
+import EditUserComponent from './modules/EditUserComponent';
 import AboutComponent from './modules/AboutComponent';
 import NotFoundComponent from './modules/NotFoundComponent';
 
@@ -33,6 +34,7 @@ class AppContainer extends Component {
                         <Route path="/users">
                             <Switch>
                                 <Route path="/users/adduser" render={ (props) => <AddUserComponent {...props} /> } />
+                                <Route path="/users/edituser/:id" render={ (props) => <EditUserComponent {...props} /> } />
                                 <Route exact path="/users" render={ (props) => <UsersComponent {...props} /> } />
                             </Switch>
                         </Route>
