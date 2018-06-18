@@ -47,8 +47,6 @@ class EditUserComponent extends Component {
         setTitle('Редактировать пользователя');
     }
 
-    componentWillReceiveProps() {}
-
     componentDidMount() {
 
         const {match, asyncGetUser} = this.props;
