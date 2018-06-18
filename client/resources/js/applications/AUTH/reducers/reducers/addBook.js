@@ -25,7 +25,7 @@ export default function (state = null, action) {
 
     switch (action.type) {
         case actions.ADD_BOOK_STOP_LOADING:
-            return {...returnState, ...payload, disabled: false, globalLoading: false};
+            return {...returnState, ...payload, disabled: false, globalLoading: false, isLoaded: true};
         case actions.ADD_BOOK_START_LOADING:
             return {...returnState, ...payload, disabled: true, globalLoading: false};
         case actions.ADD_BOOK_START_GLOBAL_LOADING:

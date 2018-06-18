@@ -82,8 +82,10 @@ class AddBookComponent extends Component {
 
     _onSiteChange(siteId) {
 
-        this._loadData({
-            isSelectError: parseInt(siteId) === -1 ? true : false,
+        const {setAddFormData} = this.props;
+
+        setAddFormData({
+            isSelectError: parseInt(siteId) === -1,
             selectedSiteId: siteId
         });
     }
