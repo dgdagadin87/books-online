@@ -1,15 +1,20 @@
 import actions from '../../../../config/actions';
 
 const initialState = {
+    disabled: false,
+    globalLoading: false,
+    isSelectError: false,
+    isSearchError: false,
+    isLoaded: false,
     collection: false,
-    sortField: 'bookName',
-    sortType: 'ASC',
+    sites: false,
+    isFoundInMy: false,
+    isFoundInAll: false,
     searchTerm: '',
+    selectedSiteId: -1,
     page: 1,
     pages: 1,
-    totalCount: 0,
-    disabled: false,
-    globalLoading: false
+    totalCount: 0
 };
 
 export default function (state = null, action) {
@@ -19,12 +24,14 @@ export default function (state = null, action) {
     let returnState = !!state ? state : initialState;
 
     switch (action.type) {
-        case actions.ALL_BOOKS_STOP_LOADING:
-            return {...payload, disabled: false, globalLoading: false};
-        case actions.ALL_BOOKS_START_LOADING:
+        case actions.ADD_BOOK_STOP_LOADING:
+            return {...returnState, ...payload, disabled: false, globalLoading: false};
+        case actions.ADD_BOOK_START_LOADING:
             return {...returnState, ...payload, disabled: true, globalLoading: false};
-        case actions.ALL_BOOKS_START_GLOBAL_LOADING:
+        case actions.ADD_BOOK_START_GLOBAL_LOADING:
             return {...returnState, ...payload, disabled: false, globalLoading: true};
+        case actions.ADD_BOOK_SET_FORM_DATA:
+            return {...returnState, ...payload};
         default:
             return returnState;
 

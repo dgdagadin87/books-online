@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
-
+import {Link} from 'react-router-dom';
 
 import {pageSettings} from '../../../../config/settings';
+import {isEmpty} from '../../../../core/coreUtils';
 
 import { changeTitle } from '../../actions/common';
 import {
@@ -36,7 +37,7 @@ const mapStateToProps = state => {
     }
 };
 
-function matchDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch) {
 
     return bindActionCreators({
         setTitle: changeTitle,
@@ -50,7 +51,7 @@ class AddBookComponent extends Component {
     constructor(props) {
         super(props);
 
-        let {setTitle} = this.props;
+        let {setTitle, isSelectError} = this.props;
 
         setTitle('Добавление книги');
     }
@@ -160,7 +161,7 @@ class AddBookComponent extends Component {
 
     _renderPreloader() {
 
-        const {globalLoading, disabled} = this.state;
+        const {globalLoading, disabled} = this.props;
 
         if (!globalLoading && disabled) {
             return (
@@ -403,7 +404,7 @@ class AddBookComponent extends Component {
 
     _renderCollection() {
 
-        const {collection, disabled} = this.state;
+        const {collection, disabled} = this.props;
 
         if (disabled) {
             return null;
@@ -426,7 +427,7 @@ class AddBookComponent extends Component {
 
     _renderPaging() {
 
-        const {page, pages, disabled, collection} = this.state;
+        const {page, pages, disabled, collection} = this.props;
 
         if (collection === false) {
             return null;
@@ -468,7 +469,7 @@ class AddBookComponent extends Component {
 
     render() {
 
-        const {globalLoading, sites} = this.state;
+        const {globalLoading, sites} = this.props;
 
         return (
             <div className="main-addnewbook__container">
@@ -478,9 +479,4 @@ class AddBookComponent extends Component {
     }
 }
 
-AddBookComponent.propTypes = {
-    serverData: PropTypes.object.isRequired,
-    globalEvents:  PropTypes.object.isRequired
-};
-
-export default AddBookComponent;
+export default connect(mapStateToProps, mapDispatchToProps)(AddBookComponent);

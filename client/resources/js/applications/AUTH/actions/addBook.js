@@ -15,7 +15,7 @@ export const asyncGetAddBook = (isLoaded, actionData, queryData) => {
 
         Request.send({
             url: createUrl(defaultSettings, urlSettings['getAddBook']),
-            data: JSON.stringify({...queryData, ...actionData})
+            data: {...queryData, ...actionData}
         })
         .then( (response) => {
 
