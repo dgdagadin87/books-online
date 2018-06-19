@@ -201,7 +201,7 @@ class AddBookComponent extends Component {
                         onClick={(event) => {
                             event.preventDefault();
                             setMyBooksSearchTerm(searchTerm);
-                            history.push('/mybooks');
+                            history.push('/');
                         }}
                     >
                         Мои книги
