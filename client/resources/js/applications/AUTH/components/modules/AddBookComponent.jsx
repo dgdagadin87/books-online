@@ -12,6 +12,8 @@ import {
     asyncGetAddBook,
     setAddBookFormData
 } from '../../actions/addBook';
+import { setMyBooksSearchTerm } from '../../actions/myBooks';
+import { setAllBooksSearchTerm } from '../../actions/allBooks';
 
 import PreloaderComponent from '../partials/LargePreloaderComponent';
 import SearchComponent from '../partials/SearchComponent';
@@ -42,7 +44,9 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         setTitle: changeTitle,
         asyncGetAddBook: asyncGetAddBook,
-        setAddFormData: setAddBookFormData
+        setAddFormData: setAddBookFormData,
+        setMyBooksSearchTerm: setMyBooksSearchTerm,
+        setAllBooksSearchTerm: setAllBooksSearchTerm
     }, dispatch);
 }
 
@@ -179,7 +183,7 @@ class AddBookComponent extends Component {
 
     _renderFoundInThis() {
 
-        const {globalEvents} = this.props;
+        const {history, setMyBooksSearchTerm, setAllBooksSearchTerm} = this.props;
         const {isFoundInMy, isFoundInAll, searchTerm, disabled} = this.props;
 
         if (disabled) {
@@ -196,13 +200,8 @@ class AddBookComponent extends Component {
                         href='#'
                         onClick={(event) => {
                             event.preventDefault();
-                            let linkToMy = $('#addBook-myBooks a:first-child');
-                            let defaultMyBooksData = getDefaultState('mybooks');
-                            defaultMyBooksData.filter.searchTerm = searchTerm;
-                            let callBack = () => {
-                                linkToMy[0].click();
-                            };
-                            globalEvents.trigger('setModuleData', defaultMyBooksData, 'mybooks', callBack.bind(this));
+                            setMyBooksSearchTerm(searchTerm);
+                            history.push('/mybooks');
                         }}
                     >
                         Мои книги
@@ -211,9 +210,6 @@ class AddBookComponent extends Component {
                 foundInMy = (
                     <div className="main-addnewbook__foundin-item">
                         Результаты, содержащие введенную фразу для поиска (<strong>{searchTerm}</strong>), найдены в разделе {linkToMyBooks}
-                        <div id="addBook-myBooks" style={{display:'none'}}>
-                            <Link to={'/'}>{'Мои книги'}</Link>
-                        </div>
                     </div>
                 );
             }
@@ -224,13 +220,8 @@ class AddBookComponent extends Component {
                         href='#'
                         onClick={(event) => {
                             event.preventDefault();
-                            let linkToAll = $('#addBook-allBooks a:first-child');
-                            let defaultAllBooksData = getDefaultState('allbooks');
-                            defaultAllBooksData.filter.searchTerm = searchTerm;
-                            let callBack = () => {
-                                linkToAll[0].click();
-                            };
-                            globalEvents.trigger('setModuleData', defaultAllBooksData, 'allbooks', callBack.bind(this));
+                            setAllBooksSearchTerm(searchTerm);
+                            history.push('/allbooks');
                         }}
                     >
                         Все книги
@@ -239,9 +230,6 @@ class AddBookComponent extends Component {
                 foundInAll = (
                     <div className="main-addnewbook__foundin-item">
                         Результаты, содержащие введенную фразу для поиска (<strong>{searchTerm}</strong>), найдены в разделе {linkToAllBooks}
-                        <div id="addBook-allBooks" style={{display:'none'}}>
-                            <Link to={'/allbooks'}>{'Все книги'}</Link>
-                        </div>
                     </div>
                 );
             }

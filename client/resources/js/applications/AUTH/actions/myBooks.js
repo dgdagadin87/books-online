@@ -91,3 +91,10 @@ export const asyncDeleteMyBook = (bookId, loadBooksCallback) => {
         });
     }
 };
+
+export const setMyBooksSearchTerm = (searchTerm) => {
+    return {
+        type: actions.MY_BOOKS_SET_DEFAULT_SEARCH_TERM,
+        payload: searchTerm
+    }
+};
