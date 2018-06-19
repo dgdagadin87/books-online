@@ -11,6 +11,7 @@ import AddBookComponent from './modules/AddBookComponent';
 import UsersComponent from './modules/UsersComponent';
 import AddUserComponent from './modules/AddUserComponent';
 import EditUserComponent from './modules/EditUserComponent';
+import NotificationsComponent from './modules/NotificationsComponent';
 import AboutComponent from './modules/AboutComponent';
 import NotFoundComponent from './modules/NotFoundComponent';
 
@@ -38,6 +39,7 @@ class AppContainer extends Component {
                                 <Route exact path="/users" render={ (props) => <UsersComponent {...props} /> } />
                             </Switch>
                         </Route>
+                        <Route path="/notifications" render={ (props) => <NotificationsComponent {...props} /> } />
                         <Route path="/about" render={ (props) => <AboutComponent {...props} /> } />
                         <Route component={NotFoundComponent} />
                     </Switch>
