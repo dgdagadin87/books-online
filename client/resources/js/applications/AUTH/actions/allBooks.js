@@ -15,7 +15,7 @@ export const asyncGetAllBooks = (collection, actionData, queryData) => {
 
         Request.send({
             url: createUrl(defaultSettings, urlSettings['allBooks']),
-            data: JSON.stringify({...queryData, ...actionData})
+            data: {...queryData, ...actionData}
         })
         .then( (response) => {
 
