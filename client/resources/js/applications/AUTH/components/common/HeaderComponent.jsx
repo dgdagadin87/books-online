@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import MenuLinkComponent from './MenuLinkComponent';
+import NotificationsComponent from '../partials/NotificationsComponent'
 
 class Header extends Component {
 
@@ -107,15 +108,6 @@ class Header extends Component {
             <MenuLinkComponent
                 key={4}
                 activeOnlyWhenExact={false}
-                to={'/notifications'}
-                label={'Уведомления'}
-            />
-        );
-
-        menuLinks.push(
-            <MenuLinkComponent
-                key={4}
-                activeOnlyWhenExact={false}
                 to={'/about'}
                 label={'О программе'}
             />
@@ -138,6 +130,7 @@ class Header extends Component {
                 </div>
                 <div onClick={this._onUserIconClick.bind(this)} title={'Вы вошли как '+ userName} className="popup-prevent main-navigation__user-icon" />
                 <div onClick={this._onUserIconClick.bind(this)} title={'Вы вошли как '+ userName} className="popup-prevent main-navigation__user-icon-down" />
+                <NotificationsComponent />
                 <div className="popup-prevent header__popup-window" style={{display: !showContext ? 'none' : 'block'}}>
                     <div style={{marginBottom:'3px'}}>Вы вошли как</div>
                     <strong>{userName}</strong>
