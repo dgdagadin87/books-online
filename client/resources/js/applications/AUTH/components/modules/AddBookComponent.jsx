@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
-import {Link} from 'react-router-dom';
-
 import {pageSettings} from '../../../../config/settings';
 import {isEmpty} from '../../../../core/coreUtils';
+
+import {createUrl} from '../../../../core/coreUtils';
 
 import { changeTitle } from '../../actions/common';
 import {
@@ -292,7 +292,7 @@ class AddBookComponent extends Component {
 
                                 ajaxQuery(
                                     {
-                                        url: CUL(defaultSettings, urlSettings['getRawBook']),
+                                        url: createUrl(defaultSettings, urlSettings['getRawBook']),
                                         data: queryData,
                                         method: 'POST'
                                     },
@@ -332,7 +332,7 @@ class AddBookComponent extends Component {
 
                                 ajaxQuery(
                                     {
-                                        url: CUL(defaultSettings, urlSettings['addRawBook']),
+                                        url: createUrl(defaultSettings, urlSettings['addRawBook']),
                                         data: queryData,
                                         method: 'POST'
                                     },

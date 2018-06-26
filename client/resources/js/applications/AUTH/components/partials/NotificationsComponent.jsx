@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import {toggleDisplayList} from '../../actions/notifications';
-import {defaultSettings, urlSettings} from "../../../../config/settings";
-import {createUrl} from "../../../../core/coreUtils";
+import {defaultSettings, urlSettings} from '../../../../config/settings';
+import {createUrl} from '../../../../core/coreUtils';
 
 const mapStateToProps = (state) => {
     return {
