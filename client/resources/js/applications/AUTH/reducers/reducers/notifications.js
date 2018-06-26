@@ -1,6 +1,7 @@
 import actions from '../../../../config/actions';
 
 const initialState = {
+    displayList: false,
     notReadCount: 3,
     notifications: [
         {
@@ -23,6 +24,20 @@ const initialState = {
             bookId: 33,
             bookName: 'Никогде',
             type: 'download'
+        },
+        {
+            id: 4,
+            status: 'success',
+            bookId: 44,
+            bookName: 'Звонят, звонят колокола!',
+            type: 'download'
+        },
+        {
+            id: 5,
+            status: 'success',
+            bookId: 55,
+            bookName: 'Народные рецепты',
+            type: 'download'
         }
     ]
 };
@@ -36,6 +51,9 @@ export default function (state = null, action) {
     switch (action.type) {
         case actions.NOTIFICATIONS_SET_DATA:
             return {...returnState, ...payload};
+        case actions.NOTIFICATIONS_SET_DISPLAY_LIST:
+            console.log(payload);
+            return {...returnState, displayList: payload};
         default:
             return returnState;
 

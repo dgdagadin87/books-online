@@ -1116,6 +1116,17 @@ body {
     font-weight: bold;
     border-radius: 3px;
 }
+.notifications__number.no-unread {
+    background: #ffffff;
+    color: #aaaaaa;
+}
+.notifications__title {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
 .notifications__number:hover {
     cursor: pointer;
 }
@@ -1125,7 +1136,7 @@ body {
     top: 30px;
     right: -80px;
     z-index:15;
-    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    box-shadow: 0 0 11px rgba(0,0,0,0.5);
     border-radius: 3px;
     font-family: "Helvetica New",Arial,sans-serif;
     text-align: left !important;

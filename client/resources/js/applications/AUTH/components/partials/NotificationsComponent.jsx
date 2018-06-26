@@ -2,21 +2,22 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {changeTitle} from '../../actions/common';
+import {toggleDisplayList} from '../../actions/notifications';
 import {defaultSettings, urlSettings} from "../../../../config/settings";
 import {createUrl as CUL} from "../../../../core/coreUtils";
 
 const mapStateToProps = (state) => {
     return {
         notReadCount: state.notificationsData.notReadCount,
-        notifications: state.notificationsData.notifications
+        notifications: state.notificationsData.notifications,
+        displayList: state.notificationsData.displayList
     };
 };
 
 function mapDispatchToProps(dispatch) {
 
     return bindActionCreators({
-        changeTitle: changeTitle
+        toggleDisplayList: toggleDisplayList
     }, dispatch);
 }
 
@@ -25,10 +26,6 @@ class Notifications extends Component {
     constructor(props) {
 
         super(props);
-
-        this.state = {
-            displayList: false
-        };
     }
 
     _onBadgeClick (ev) {
@@ -37,20 +34,18 @@ class Notifications extends Component {
             return;
         }
 
-        const {displayList} = this.state;
+        const {toggleDisplayList, displayList} = this.props;
 
-        this.setState({
-            displayList: !displayList
-        });
+        toggleDisplayList(!displayList);
     }
 
     _onCloseClick(ev) {
 
         ev.preventDefault();
 
-        this.setState({
-            displayList: false
-        });
+        const {toggleDisplayList} = this.props;
+
+        toggleDisplayList(false);
     }
 
     _onClearClick(ev) {
@@ -112,16 +107,19 @@ class Notifications extends Component {
 
     render() {
 
-        const {notReadCount = 0} = this.props;
-        const {displayList = false} = this.state;
+        const {notReadCount = 0, displayList = false} = this.props;
+
+        const badgeTitle = !notReadCount || parseInt(notReadCount) === 0 ? 'Нет непрочитанных уведомлений' : notReadCount + ' непрочитанных уведомлений';
+        const noUnreadClass = !notReadCount || parseInt(notReadCount) === 0 ? ' no-unread' : '';
 
         return (
-            <div className="notifications__number" onClick={this._onBadgeClick.bind(this)}>
-                {notReadCount}
+            <div className={'notifications__number' + noUnreadClass} onClick={this._onBadgeClick.bind(this)}>
+                <span title={badgeTitle}>{notReadCount}</span>
                 <div
                     className="notifications-prevent notifications__list"
                     style={{display: displayList ? 'block' : 'none'}}
                 >
+                    <div className="notifications__title">Список уведомлений</div>
                     <div className="notifications-prevent" style={{textAlign:'right', marginBottom:'10px'}}>
                         <a onClick={this._onClearClick.bind(this)} className="notifications-prevent notifications__link" href="#">Очистить</a>
                         &nbsp;
