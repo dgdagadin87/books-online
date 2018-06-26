@@ -1,8 +1,30 @@
 import actions from '../../../../config/actions';
 
 const initialState = {
-    notReadCount: 7,
-    notifications: []
+    notReadCount: 3,
+    notifications: [
+        {
+            id: 1,
+            status: 'success',
+            bookId: 11,
+            bookName: 'Синий мопс счастья',
+            type: 'add'
+        },
+        {
+            id: 2,
+            status: 'success',
+            bookId: 22,
+            bookName: 'Квазимодо на шпильках',
+            type: 'add'
+        },
+        {
+            id: 3,
+            status: 'error',
+            bookId: 33,
+            bookName: 'Никогде',
+            type: 'download'
+        }
+    ]
 };
 
 export default function (state = null, action) {

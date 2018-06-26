@@ -1119,6 +1119,64 @@ body {
 .notifications__number:hover {
     cursor: pointer;
 }
+.notifications__list {
+    background: #ffffff;
+    position: absolute;
+    top: 30px;
+    right: -80px;
+    z-index:15;
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    border-radius: 3px;
+    font-family: "Helvetica New",Arial,sans-serif;
+    text-align: left !important;
+    color: #333;
+    padding: 10px;
+    width: 400px;
+    cursor: default;
+}
+.notifications__nodata {
+    font-size: 14px;
+    color: #333333;
+    font-weight: normal;
+}
+.notifications__table {
+    width: 100%;
+    font-weight: normal;
+    font-size: 14px;
+}
+.notifications__table td {
+    padding: 4px 3px 4px 3px;
+    border-bottom: 1px solid #cccccc;
+}
+.notifications__table tr:last-child td {
+    border-bottom: none;
+}
+.notifications__table .notifications__status-cell {
+    width: 25px;
+}
+.notifications__table .notifications__panel-cell {
+    width: 50px;
+}
+.notifications__table .notifications__status {
+    width: 16px;
+    height: 16px;
+}
+.notifications__table .notifications__status.success {
+    background: transparent url('../img/notification-ok.png') no-repeat;
+}
+.notifications__table .notifications__status.error {
+    background: transparent url('../img/notification-error.png') no-repeat;
+}
+.notifications__link {
+    font-size: 14px;
+    color: #333333;
+    font-weight: normal;
+}
+.notifications__download {
+    font-size: 13px;
+    color: #2b80cf;
+    font-weight: normal;
+}
 
 .header__popup-window {
     border:1px solid #999;
