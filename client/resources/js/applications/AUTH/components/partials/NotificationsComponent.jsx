@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 
 import {toggleDisplayList} from '../../actions/notifications';
 import {defaultSettings, urlSettings} from "../../../../config/settings";
-import {createUrl as CUL} from "../../../../core/coreUtils";
+import {createUrl} from "../../../../core/coreUtils";
 
 const mapStateToProps = (state) => {
     return {
@@ -83,7 +83,7 @@ class Notifications extends Component {
                     <td className="notifications-prevent notifications__panel-cell">
                         <a
                             target="_blank"
-                            href={CUL(defaultSettings, urlSettings['downloadBook']) + bookId}
+                            href={createUrl(defaultSettings, urlSettings['downloadBook']) + bookId}
                             className="notifications-prevent notifications__download"
                         >
                             Скачать
