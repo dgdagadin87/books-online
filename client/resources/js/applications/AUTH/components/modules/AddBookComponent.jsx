@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
-import {pageSettings} from '../../../../config/settings';
+import {pageSettings, defaultSettings} from '../../../../config/settings';
 import {isEmpty} from '../../../../core/coreUtils';
 
 import {createUrl} from '../../../../core/coreUtils';
