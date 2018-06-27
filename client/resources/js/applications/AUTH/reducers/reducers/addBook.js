@@ -14,7 +14,11 @@ const initialState = {
     selectedSiteId: -1,
     page: 1,
     pages: 1,
-    totalCount: 0
+    totalCount: 0,
+
+    showPopup: false,
+    bookId: null,
+    mode: 'download'
 };
 
 export default function (state = null, action) {
@@ -31,6 +35,8 @@ export default function (state = null, action) {
         case actions.ADD_BOOK_START_GLOBAL_LOADING:
             return {...returnState, ...payload, disabled: false, globalLoading: true};
         case actions.ADD_BOOK_SET_FORM_DATA:
+            return {...returnState, ...payload};
+        case actions.ADD_BOOK_SHOW_POPUP:
             return {...returnState, ...payload};
         default:
             return returnState;

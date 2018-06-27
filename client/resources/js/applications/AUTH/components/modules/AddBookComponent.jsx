@@ -2,15 +2,20 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
-import {pageSettings, defaultSettings} from '../../../../config/settings';
+import {pageSettings, defaultSettings, urlSettings} from '../../../../config/settings';
 import {isEmpty} from '../../../../core/coreUtils';
 
 import {createUrl} from '../../../../core/coreUtils';
 
-import { changeTitle } from '../../actions/common';
+import Request from '../../../../core/request';
+
+import actions from '../../../../config/actions';
+
+import { changeTitle, setGlobalError } from '../../actions/common';
 import {
     asyncGetAddBook,
-    setAddBookFormData
+    setAddBookFormData,
+    showAddBookPopup
 } from '../../actions/addBook';
 import { setMyBooksSearchTerm } from '../../actions/myBooks';
 import { setAllBooksSearchTerm } from '../../actions/allBooks';
@@ -19,6 +24,7 @@ import PreloaderComponent from '../partials/LargePreloaderComponent';
 import SearchComponent from '../partials/SearchComponent';
 import SelectSiteComponent from '../partials/SelectSiteComponent';
 import PagingComponent from '../partials/PagingComponent';
+import PopupComponent from '../modal/PopupModule';
 
 const mapStateToProps = state => {
     return {
@@ -43,10 +49,12 @@ function mapDispatchToProps(dispatch) {
 
     return bindActionCreators({
         setTitle: changeTitle,
+        setGlobalError: setGlobalError,
         asyncGetAddBook: asyncGetAddBook,
         setAddFormData: setAddBookFormData,
         setMyBooksSearchTerm: setMyBooksSearchTerm,
-        setAllBooksSearchTerm: setAllBooksSearchTerm
+        setAllBooksSearchTerm: setAllBooksSearchTerm,
+        showPopup: showAddBookPopup
     }, dispatch);
 }
 
@@ -251,8 +259,7 @@ class AddBookComponent extends Component {
 
     _renderTable() {
 
-        const {globalEvents} = this.props;
-        const {collection} = this.props;
+        const {collection, showPopup} = this.props;
 
         let rowsArray = [];
 
@@ -281,7 +288,6 @@ class AddBookComponent extends Component {
                             href="#"
                             onClick={(event) => {
                                 event.preventDefault();
-                                globalEvents.trigger('downloadRawBook', 'start', false);
 
                                 let queryData = {
                                     bookLink: currentItem['link'],
@@ -290,27 +296,35 @@ class AddBookComponent extends Component {
                                     bookName: currentItem['name']
                                 };
 
-                                ajaxQuery(
-                                    {
-                                        url: createUrl(defaultSettings, urlSettings['getRawBook']),
-                                        data: queryData,
-                                        method: 'POST'
-                                    },
-                                    {
-                                        afterSuccess: (result) => {
-                                            if (!result.isSuccess) {
-                                                globalEvents.trigger('showError', result);
-                                                globalEvents.trigger('downloadRawBook', 'error');
-                                                return;
-                                            }
-                                            let {data} = result;
-                                            globalEvents.trigger('downloadRawBook', 'end', data.bookId);
-                                        },
-                                        afterError: (result) => {
-                                            globalEvents.trigger('showError', result);
-                                        }
+                                Request.send({
+                                    type: 'post',
+                                    url: createUrl(defaultSettings, urlSettings['getRawBook']),
+                                    data: JSON.stringify(queryData)
+                                })
+                                .then( (response) => {
+
+                                    const {hasInCache, bookId} = response;
+
+                                    let popupPayload = {
+                                        mode: 'download',
+                                        showPopup: true
+                                    };
+
+                                    if (hasInCache) {
+                                        popupPayload['bookId'] = bookId;
                                     }
-                                );
+                                    else {
+                                        popupPayload['bookId'] = null;
+                                    }
+
+                                    showPopup(popupPayload);
+                                })
+                                .catch((error) => {
+                                    console.log('error', error);
+                                    const {message, statusText} = error;
+                                    const errorMessage = statusText ? statusText : message;
+                                    setGlobalError(errorMessage);
+                                });
                             }}
                         >
                             Скачать
@@ -321,7 +335,6 @@ class AddBookComponent extends Component {
                             href="#"
                             onClick={(event) => {
                                 event.preventDefault();
-                                globalEvents.trigger('addInMyBooks', 'start');
 
                                 let queryData = {
                                     bookLink: currentItem['link'],
@@ -330,7 +343,10 @@ class AddBookComponent extends Component {
                                     bookName: currentItem['name']
                                 };
 
-                                ajaxQuery(
+                                console.log(queryData);
+                                showPopup(true);
+
+                                /*ajaxQuery(
                                     {
                                         url: createUrl(defaultSettings, urlSettings['addRawBook']),
                                         data: queryData,
@@ -351,7 +367,7 @@ class AddBookComponent extends Component {
                                             globalEvents.trigger('showError', result);
                                         }
                                     }
-                                );
+                                );*/
                             }}
                         >
                             Добавить
@@ -440,6 +456,13 @@ class AddBookComponent extends Component {
         );
     }
 
+    _renderPopup() {
+
+        return (
+            <PopupComponent key={8} />
+        );
+    }
+
     _renderAddBook() {
 
         let addBookUI = [];
@@ -453,6 +476,8 @@ class AddBookComponent extends Component {
         addBookUI.push(this._renderCollection());
 
         addBookUI.push(this._renderPaging());
+
+        addBookUI.push(this._renderPopup());
 
         return addBookUI;
     }

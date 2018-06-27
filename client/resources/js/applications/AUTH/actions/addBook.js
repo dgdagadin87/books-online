@@ -42,3 +42,10 @@ export const setAddBookFormData = (formData) => {
         payload: formData
     }
 };
+
+export const showAddBookPopup = (payload) => {
+    return {
+        type: actions.ADD_BOOK_SHOW_POPUP,
+        payload: payload
+    }
+};

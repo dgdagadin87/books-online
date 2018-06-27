@@ -28,7 +28,8 @@ let urlSettings = {
     'deleteUser'   : '/api/deleteuser/',
     'getUser'      : '/api/getuser/',
     'editUser'     : '/api/edituser/',
-    'getAddBook'   : '/api/addbook'
+    'getAddBook'   : '/api/addbook',
+    'getRawBook'   : '/api/getrawbook'
 };
 
 export {defaultSettings, pageSettings, urlSettings};

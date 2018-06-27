@@ -6,3 +6,10 @@ export const changeTitle = (title) => {
         payload: title
     }
 };
+
+export const setGlobalError = (errorText) => {
+    return {
+        type: actions.COMMON_ADD_GLOBAL_ERROR,
+        payload: errorText
+    }
+};
