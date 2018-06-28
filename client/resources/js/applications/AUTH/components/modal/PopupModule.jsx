@@ -42,14 +42,31 @@ class AddBookPopup extends Component {
 
         const {bookId, mode} = this.props;
 
-        const textContent = bookId ? 'Файл книги сформирован для скачивания.' : 'Начато формирование файла книги. По мере готовности Вам придет уведомление.';
-
         if (mode === 'download') {
+
+            const textContent = bookId ? 'Файл книги сформирован для скачивания.' : 'Начато формирование файла книги. По мере готовности Вам придет уведомление.';
+
             return (
                 <div className="main-addnewbook__modal-end">
                     <div style={{paddingBottom:'25px'}}>{textContent}</div>
                     {bookId ? <button onClick={this._downloadHandler.bind(this)} className="button">Скачать книгу</button> : null}
                     <button className="button button-last" onClick={this._closeHandler.bind(this)}>Закрыть окно</button>
+                </div>
+            );
+        }
+        else {
+
+            const textContent = bookId ? 'Книга успешно добавлена в "Мои книги".' : 'Начато добавление книги в раздел "Мои книги". По мере готовности Вам придет уведомление.';
+
+            return (
+                <div className="main-addnewbook__modal-end">
+                    <div style={{paddingBottom:'25px'}}>{textContent}</div>
+                    <button
+                        className="button"
+                        onClick={this._closeHandler.bind(this)}
+                    >
+                        Закрыть окно
+                    </button>
                 </div>
             );
         }

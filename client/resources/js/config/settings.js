@@ -29,7 +29,8 @@ let urlSettings = {
     'getUser'      : '/api/getuser/',
     'editUser'     : '/api/edituser/',
     'getAddBook'   : '/api/addbook',
-    'getRawBook'   : '/api/getrawbook'
+    'getRawBook'   : '/api/getrawbook',
+    'addRawBook'   : '/api/addrawbook'
 };
 
 export {defaultSettings, pageSettings, urlSettings};

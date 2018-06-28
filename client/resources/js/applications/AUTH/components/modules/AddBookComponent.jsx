@@ -136,6 +136,50 @@ class AddBookComponent extends Component {
         }
     }
 
+    _clickOnButtons (currentItem, author, mode) {
+
+        const {showPopup, setGlobalError} = this.props;
+
+        const queryData = {
+            bookLink: currentItem['link'],
+            bookAuthor: author,
+            bookGenre: currentItem['genre'],
+            bookName: currentItem['name']
+        };
+
+        const prefix = mode === 'download' ? 'get' : 'add';
+
+        Request.send({
+            type: 'post',
+            url: createUrl(defaultSettings, urlSettings[prefix + 'RawBook']),
+            data: JSON.stringify(queryData)
+        })
+        .then( (response) => {
+
+            const {hasInCache, bookId} = response;
+
+            let popupPayload = {
+                mode: mode,
+                showPopup: true
+            };
+
+            if (hasInCache) {
+                popupPayload['bookId'] = bookId;
+            }
+            else {
+                popupPayload['bookId'] = null;
+            }
+
+            showPopup(popupPayload);
+        })
+        .catch((error) => {
+            console.log('error', error);
+            const {message, statusText} = error;
+            const errorMessage = statusText ? statusText : message;
+            setGlobalError(errorMessage);
+        });
+    }
+
     _renderSearchPanel() {
 
         const {sites = [], searchTerm, disabled, selectedSiteId, isSelectError, isSearchError} = this.props;
@@ -289,42 +333,7 @@ class AddBookComponent extends Component {
                             onClick={(event) => {
                                 event.preventDefault();
 
-                                let queryData = {
-                                    bookLink: currentItem['link'],
-                                    bookAuthor: author,
-                                    bookGenre: currentItem['genre'],
-                                    bookName: currentItem['name']
-                                };
-
-                                Request.send({
-                                    type: 'post',
-                                    url: createUrl(defaultSettings, urlSettings['getRawBook']),
-                                    data: JSON.stringify(queryData)
-                                })
-                                .then( (response) => {
-
-                                    const {hasInCache, bookId} = response;
-
-                                    let popupPayload = {
-                                        mode: 'download',
-                                        showPopup: true
-                                    };
-
-                                    if (hasInCache) {
-                                        popupPayload['bookId'] = bookId;
-                                    }
-                                    else {
-                                        popupPayload['bookId'] = null;
-                                    }
-
-                                    showPopup(popupPayload);
-                                })
-                                .catch((error) => {
-                                    console.log('error', error);
-                                    const {message, statusText} = error;
-                                    const errorMessage = statusText ? statusText : message;
-                                    setGlobalError(errorMessage);
-                                });
+                                this._clickOnButtons(currentItem, author, 'download');
                             }}
                         >
                             Скачать
@@ -336,38 +345,7 @@ class AddBookComponent extends Component {
                             onClick={(event) => {
                                 event.preventDefault();
 
-                                let queryData = {
-                                    bookLink: currentItem['link'],
-                                    bookAuthor: author,
-                                    bookGenre: currentItem['genre'],
-                                    bookName: currentItem['name']
-                                };
-
-                                console.log(queryData);
-                                showPopup(true);
-
-                                /*ajaxQuery(
-                                    {
-                                        url: createUrl(defaultSettings, urlSettings['addRawBook']),
-                                        data: queryData,
-                                        method: 'POST'
-                                    },
-                                    {
-                                        afterSuccess: (result) => {
-                                            if (!result.isSuccess) {
-                                                globalEvents.trigger('showError', result);
-                                                globalEvents.trigger('addInMyBooks', 'error');
-                                                return;
-                                            }
-                                            let defaultMyBooksData = getDefaultState('mybooks');
-                                            globalEvents.trigger('setModuleData', defaultMyBooksData, 'mybooks');
-                                            globalEvents.trigger('addInMyBooks', 'end');
-                                        },
-                                        afterError: (result) => {
-                                            globalEvents.trigger('showError', result);
-                                        }
-                                    }
-                                );*/
+                                this._clickOnButtons(currentItem, author, 'add');
                             }}
                         >
                             Добавить
