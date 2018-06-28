@@ -31,27 +31,25 @@ class AddBookPopup extends Component {
         });
     }
 
+    _downloadHandler() {
+
+        const {bookId} = this.props;
+
+        window.location.href = '/api/downloadrawbook/' + bookId;
+    }
+
     _renderContent() {
 
         const {bookId, mode} = this.props;
 
+        const textContent = bookId ? 'Файл книги сформирован для скачивания.' : 'Начато формирование файла книги. По мере готовности Вам придет уведомление.';
+
         if (mode === 'download') {
             return (
                 <div className="main-addnewbook__modal-end">
-                    <div style={{paddingBottom:'25px'}}>
-                        Файл книги сформирован для скачивания.
-                    </div>
-                    <button
-                        className="button"
-                    >
-                        Скачать книгу
-                    </button>
-                    <button
-                        className="button button-last"
-                        onClick={this._closeHandler.bind(this)}
-                    >
-                        Закрыть окно
-                    </button>
+                    <div style={{paddingBottom:'25px'}}>{textContent}</div>
+                    {bookId ? <button onClick={this._downloadHandler.bind(this)} className="button">Скачать книгу</button> : null}
+                    <button className="button button-last" onClick={this._closeHandler.bind(this)}>Закрыть окно</button>
                 </div>
             );
         }
