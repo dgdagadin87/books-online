@@ -32,9 +32,16 @@ Request.send({
 })
 .then((data) => {
 
+    const {user, sites, notifications} = data;
+
     store.dispatch({
         type: actions.COMMON_SET_USER_DATA,
-        payload: data
+        payload: {user, sites}
+    });
+
+    store.dispatch({
+        type: actions.NOTIFICATIONS_SET_DATA,
+        payload: {...notifications}
     });
 
     reactDom.render(

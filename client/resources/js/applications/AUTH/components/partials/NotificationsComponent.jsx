@@ -2,8 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {toggleDisplayList} from '../../actions/notifications';
-import {defaultSettings, urlSettings} from '../../../../config/settings';
+import {
+    toggleDisplayList,
+    setNotificationsData,
+    setNotificationsRead} from '../../actions/notifications';
+import {defaultSettings, urlSettings, getNotificationsPeriod} from '../../../../config/settings';
 import {createUrl} from '../../../../core/coreUtils';
 
 const mapStateToProps = (state) => {
@@ -17,7 +20,9 @@ const mapStateToProps = (state) => {
 function mapDispatchToProps(dispatch) {
 
     return bindActionCreators({
-        toggleDisplayList: toggleDisplayList
+        toggleDisplayList: toggleDisplayList,
+        setNotificationsData: setNotificationsData,
+        setNotificationsRead: setNotificationsRead
     }, dispatch);
 }
 
@@ -28,24 +33,42 @@ class Notifications extends Component {
         super(props);
     }
 
+    componentDidMount() {
+
+        const {setNotificationsData} = this.props;
+
+        window.setInterval(() => {
+            setNotificationsData();
+        }, getNotificationsPeriod);
+    }
+
+    _toggleDisplayList(value) {
+
+        const {toggleDisplayList, setNotificationsRead} = this.props;
+
+        toggleDisplayList(value);
+
+        if (!value) {
+            setNotificationsRead();
+        }
+    }
+
     _onBadgeClick (ev) {
 
         if (ev.target.classList.contains('notifications-prevent')) {
             return;
         }
 
-        const {toggleDisplayList, displayList} = this.props;
+        const {displayList} = this.props;
 
-        toggleDisplayList(!displayList);
+        this._toggleDisplayList(!displayList);
     }
 
     _onCloseClick(ev) {
 
         ev.preventDefault();
 
-        const {toggleDisplayList} = this.props;
-
-        toggleDisplayList(false);
+        this._toggleDisplayList(false);
     }
 
     _onClearClick(ev) {

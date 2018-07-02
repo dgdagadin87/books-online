@@ -1,17 +1,17 @@
-let defaultSettings = {
+const defaultSettings = {
     'serverHost' : '127.0.0.1',
     'serverPort': 9002,
     'serverProtocol': 'http'
 };
 
-let pageSettings = {
+const pageSettings = {
     'start' : 1,
     'end': 1,
     'left': 2,
     'right': 2
 };
 
-let urlSettings = {
+const urlSettings = {
     'common'       : '/api/common',
     'login'        : '/api/login',
     'register'     : '/api/register',
@@ -30,7 +30,12 @@ let urlSettings = {
     'editUser'     : '/api/edituser/',
     'getAddBook'   : '/api/addbook',
     'getRawBook'   : '/api/getrawbook',
-    'addRawBook'   : '/api/addrawbook'
+    'addRawBook'   : '/api/addrawbook',
+
+    'getNotifyInfo': '/api/getnotifyinfo',
+    'setNotifyRead': '/api/setnotifyread'
 };
 
-export {defaultSettings, pageSettings, urlSettings};
+const getNotificationsPeriod =  60 * 1000;
+
+export {defaultSettings, pageSettings, urlSettings, getNotificationsPeriod};
