@@ -38,17 +38,15 @@ export const setNotificationsData = () => {
     }
 };
 
-export const setNotificationsRead = () => {
+export const setNotificationsRead = (notificationIds) => {
     return dispatch => {
 
         const urlToSend = `${createUrl(defaultSettings, urlSettings['setNotifyRead'])}`;
-        const nowDate = new Date();
-        const microTime = nowDate.getTime();
 
         Request.send({
             url: urlToSend,
-            type: 'get',
-            data: {time: microTime}
+            type: 'post',
+            data: JSON.stringify({notificationIds})
         })
         .then( () => {
 

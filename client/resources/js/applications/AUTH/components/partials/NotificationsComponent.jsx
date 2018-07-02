@@ -42,14 +42,30 @@ class Notifications extends Component {
         }, getNotificationsPeriod);
     }
 
+    _getNotificationsIds() {
+
+        const {notifications = []} = this.props;
+
+        let notifyIds = [];
+
+        for (let i = 0; i < notifications.length; i++) {
+
+            const currentItem = notifications[i];
+            notifyIds.push(currentItem['id']);
+        }
+
+        return notifyIds;
+    }
+
     _toggleDisplayList(value) {
 
         const {toggleDisplayList, setNotificationsRead} = this.props;
+        const notifyIds = this._getNotificationsIds();
 
         toggleDisplayList(value);
 
         if (!value) {
-            setNotificationsRead();
+            setNotificationsRead(notifyIds);
         }
     }
 
