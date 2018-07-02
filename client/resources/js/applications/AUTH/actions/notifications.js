@@ -61,7 +61,6 @@ export const setNotificationsRead = (notificationIds) => {
             const errorMessage = statusText ? statusText : message;
             dispatch({ type: actions.COMMON_ADD_GLOBAL_ERROR, payload: errorMessage });
         });
-
     }
 };
 
@@ -88,6 +87,5 @@ export const clearNotifications = (notificationIds) => {
             const errorMessage = statusText ? statusText : message;
             dispatch({ type: actions.COMMON_ADD_GLOBAL_ERROR, payload: errorMessage });
         });
-
     }
 };
