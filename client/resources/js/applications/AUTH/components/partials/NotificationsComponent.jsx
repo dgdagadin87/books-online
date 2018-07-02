@@ -5,7 +5,9 @@ import {bindActionCreators} from 'redux';
 import {
     toggleDisplayList,
     setNotificationsData,
-    setNotificationsRead} from '../../actions/notifications';
+    setNotificationsRead,
+    clearNotifications
+} from '../../actions/notifications';
 import {defaultSettings, urlSettings, getNotificationsPeriod} from '../../../../config/settings';
 import {createUrl} from '../../../../core/coreUtils';
 
@@ -22,7 +24,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         toggleDisplayList: toggleDisplayList,
         setNotificationsData: setNotificationsData,
-        setNotificationsRead: setNotificationsRead
+        setNotificationsRead: setNotificationsRead,
+        clearNotifications: clearNotifications
     }, dispatch);
 }
 
@@ -90,6 +93,11 @@ class Notifications extends Component {
     _onClearClick(ev) {
 
         ev.preventDefault();
+
+        const {clearNotifications} = this.props;
+        const notifyIds = this._getNotificationsIds();
+
+        clearNotifications(notifyIds);
     }
 
     _renderNotifications () {

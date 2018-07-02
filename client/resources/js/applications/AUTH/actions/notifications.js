@@ -64,3 +64,30 @@ export const setNotificationsRead = (notificationIds) => {
 
     }
 };
+
+export const clearNotifications = (notificationIds) => {
+    return dispatch => {
+
+        const urlToSend = `${createUrl(defaultSettings, urlSettings['clearNotify'])}`;
+
+        Request.send({
+            url: urlToSend,
+            type: 'post',
+            data: JSON.stringify({notificationIds})
+        })
+        .then( () => {
+
+            dispatch({
+                type: actions.NOTIFICATIONS_SET_DATA,
+                payload: {notReadCount: 0, notifications: []}
+            });
+        })
+        .catch((error) => {
+            console.log('error', error);
+            const {message, statusText} = error;
+            const errorMessage = statusText ? statusText : message;
+            dispatch({ type: actions.COMMON_ADD_GLOBAL_ERROR, payload: errorMessage });
+        });
+
+    }
+};

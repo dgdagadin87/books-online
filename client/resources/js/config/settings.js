@@ -33,7 +33,8 @@ const urlSettings = {
     'addRawBook'   : '/api/addrawbook',
 
     'getNotifyInfo': '/api/getnotifyinfo',
-    'setNotifyRead': '/api/setnotifyread'
+    'setNotifyRead': '/api/setnotifyread',
+    'clearNotify'  : '/api/clearnotify'
 };
 
 const getNotificationsPeriod =  60 * 1000;
