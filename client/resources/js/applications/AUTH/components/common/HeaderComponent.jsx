@@ -108,6 +108,15 @@ class Header extends Component {
             <MenuLinkComponent
                 key={4}
                 activeOnlyWhenExact={false}
+                to={'/profile'}
+                label={'Профиль'}
+            />
+        );
+
+        menuLinks.push(
+            <MenuLinkComponent
+                key={5}
+                activeOnlyWhenExact={false}
                 to={'/about'}
                 label={'О программе'}
             />
