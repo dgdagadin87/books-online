@@ -26,14 +26,17 @@ export const asyncEditProfile = (userName) => {
                 return;
             }
 
+            dispatch({
+                type: actions.EDIT_PROFILE_STOP_LOADING,
+                payload: { errorText: '' }
+            });
+
             alert('Ваш профиль успешно отредактирован.');
 
             dispatch({
                 type: actions.COMMON_SET_USER_DATA_AFTER_EDIT,
                 payload: {userName}
             });
-
-            history.push('/users');
         })
         .catch((error) => {
             console.log('error', error);

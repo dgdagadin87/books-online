@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import {connect} from 'react-redux';
+
 import HeaderComponent from './common/HeaderComponent';
 import FooterComponent from './common/FooterComponent';
 import TitleComponent from './common/TitleComponent';
@@ -16,6 +18,12 @@ import AboutComponent from './modules/AboutComponent';
 import NotFoundComponent from './modules/NotFoundComponent';
 
 import ErrorWindow from '../../../ui/modules/ErrorModule';
+
+const mapStateToProps = (state) => {
+    return {
+        commonData: state.commonData.userData
+    };
+};
 
 class AppContainer extends Component {
 
@@ -52,4 +60,4 @@ class AppContainer extends Component {
 
 }
 
-export default AppContainer;
+export default connect(mapStateToProps)(AppContainer);

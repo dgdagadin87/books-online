@@ -16,7 +16,9 @@ export default function (state = initialState, action) {
 
         case actions.COMMON_SET_USER_DATA_AFTER_EDIT:
             let userData = state.userData;
-            return {...state, userData: {...userData, ...action.payload}};
+            let {user} = userData;
+            userData.user = {...user, ...action.payload};
+            return {...state, userData: {...userData}};
 
         case actions.COMMON_SET_TITLE:
             document.title = 'Приложение "Книги" - раздел "' + action.payload + '"';
