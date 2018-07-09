@@ -92,7 +92,6 @@ class Login extends Component {
                                 placeholder="Введите email"
                                 onChange={this._handleEmailInput.bind(this)}
                             />
-                            {clientErrors.email ? <div style={{color:'red'}}>{clientErrors.email}</div> : null}
                         </div>
                         <div>
                             <input
@@ -103,7 +102,6 @@ class Login extends Component {
                                 placeholder="Введите пароль"
                                 onChange={this._handlePasswordInput.bind(this)}
                             />
-                            {clientErrors.password ? <div style={{color:'red'}}>{clientErrors.password}</div> : null}
                         </div>
                         <div className="buttons">
                             <button
