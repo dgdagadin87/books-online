@@ -76,41 +76,43 @@ class Login extends Component {
         const isButtonDisabled = !email || !password;
 
         return (
-            <div>
-                <div>
-                    Авторизация в системе
-                </div>
-                <div>
-                    {this._renderServerErrors()}
-                    <div>
-                        <input
-                            disabled={disabled}
-                            style={clientErrors.email ? {border:'1px solid red'} : {}}
-                            type="text"
-                            value={email}
-                            placeholder="Введите email"
-                            onChange={this._handleEmailInput.bind(this)}
-                        />
-                        {clientErrors.email ? <div style={{color:'red'}}>{clientErrors.email}</div> : null}
+            <div className="login-center">
+                <div className="login-block">
+                    <div className="login-header">
+                        Авторизация в системе
                     </div>
-                    <div>
-                        <input
-                            disabled={disabled}
-                            style={clientErrors.password ? {border:'1px solid red'} : {}}
-                            type="password"
-                            value={password}
-                            placeholder="Введите пароль"
-                            onChange={this._handlePasswordInput.bind(this)}
-                        />
-                        {clientErrors.password ? <div style={{color:'red'}}>{clientErrors.password}</div> : null}
-                    </div>
-                    <div>
-                        <button
-                            disabled={disabled || isButtonDisabled}
-                            onClick={this._onClickHandler.bind(this)}
-                        >
-                            Войти
-                        </button>
+                    <div className="controls-container">
+                        {this._renderServerErrors()}
+                        <div>
+                            <input
+                                disabled={disabled}
+                                style={clientErrors.email ? {border:'1px solid red'} : {}}
+                                type="text"
+                                value={email}
+                                placeholder="Введите email"
+                                onChange={this._handleEmailInput.bind(this)}
+                            />
+                            {clientErrors.email ? <div style={{color:'red'}}>{clientErrors.email}</div> : null}
+                        </div>
+                        <div>
+                            <input
+                                disabled={disabled}
+                                style={clientErrors.password ? {border:'1px solid red'} : {}}
+                                type="password"
+                                value={password}
+                                placeholder="Введите пароль"
+                                onChange={this._handlePasswordInput.bind(this)}
+                            />
+                            {clientErrors.password ? <div style={{color:'red'}}>{clientErrors.password}</div> : null}
+                        </div>
+                        <div className="buttons">
+                            <button
+                                disabled={disabled || isButtonDisabled}
+                                onClick={this._onClickHandler.bind(this)}
+                            >
+                                Войти
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

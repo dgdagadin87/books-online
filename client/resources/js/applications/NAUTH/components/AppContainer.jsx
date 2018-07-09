@@ -10,7 +10,7 @@ class AppContainer extends Component {
     render () {
 
         return (
-            <div className="app-not-auth__container">
+            <div className="login-container">
                 <Switch>
                     <Route exact path="/" render={ (props) => <LoginComponent {...props} /> } />
                 </Switch>
