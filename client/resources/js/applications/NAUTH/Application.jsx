@@ -2,7 +2,7 @@ import 'core-js/es6/map';
 import 'core-js/es6/set';
 import 'core-js/es6/promise';
 
-import '../../../css/login.css';
+import '../../../css/style.css';
 
 import React from 'react';
 import reactDom from 'react-dom';
