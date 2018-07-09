@@ -32,7 +32,7 @@ class ErrorModalWindow extends Component {
     _renderError(error, index) {
 
         return (
-            <div key={index}>{error}</div>
+            <div className="error" key={index}>{error}</div>
         );
     }
 
@@ -46,8 +46,8 @@ class ErrorModalWindow extends Component {
 
         return (
             <ModalComponent>
-                <div style={{display:'table-cell', verticalAlign:'middle'}}>
-                    <div style={{background: '#ffffff', width:'200px', margin:'auto'}}>
+                <div className="error__container">
+                    <div className="sub-container">
                         {errors.map((error, index) => this._renderError(error, index))}
                         <div>
                             <button onClick={this._clearClickHandler.bind(this)}>Закрыть</button>

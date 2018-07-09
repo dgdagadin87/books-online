@@ -51,9 +51,10 @@ export const asyncLogin = (email, password) => {
         })
         .catch((error) => {
             console.log('error', error);
-            const {message} = error;
+            const {message, statusText} = error;
+            const errorMessage = statusText ? statusText : message;
             dispatch({ type: actions.COMMON_NAUTH_DISABLED, payload: false });
-            dispatch({ type: actions.COMMON_ADD_GLOBAL_ERROR, payload: message });
+            dispatch({ type: actions.COMMON_ADD_GLOBAL_ERROR, payload: errorMessage });
         });
 
     }

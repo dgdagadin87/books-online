@@ -1343,6 +1343,21 @@ body {
     display: table;
 }
 
+.error__container {
+    display: table-cell;
+    vertical-align: middle;
+}
+.error__container .sub-container {
+    background: #ffffff;
+    width: 200px;
+    margin: auto;
+    padding: 10px;
+}
+.error__container .error {
+    color: #aa0000;
+    padding-bottom: 5px;
+}
+
 .clear-both {
     clear: both;
 }
