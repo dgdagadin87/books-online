@@ -4,8 +4,6 @@ import {bindActionCreators} from 'redux';
 
 import {changeEmail, changePassword, asyncLogin} from '../../actions/login';
 
-import MenuLinkComponent from '../common/MenuLinkComponent';
-
 const mapStateToProps = (state) => {
     return {
         disabled: state.commonData.disabled,
@@ -105,19 +103,6 @@ class Login extends Component {
                             onChange={this._handlePasswordInput.bind(this)}
                         />
                         {clientErrors.password ? <div style={{color:'red'}}>{clientErrors.password}</div> : null}
-                    </div>
-                    <div>
-                        <MenuLinkComponent
-                            activeOnlyWhenExact={true}
-                            to={'/register'}
-                            label={'Регистрация'}
-                        />
-                        <span>&nbsp;</span>
-                        <MenuLinkComponent
-                            activeOnlyWhenExact={true}
-                            to={'/reset'}
-                            label={'Забыли пароль?'}
-                        />
                     </div>
                     <div>
                         <button
