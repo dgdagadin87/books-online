@@ -6,6 +6,7 @@ import addUser from './reducers/addUser';
 import editUser from './reducers/editUser';
 import addBook from './reducers/addBook';
 import notifications from './reducers/notifications';
+import profile from './reducers/profile';
 
 import common from './reducers/common';
 
@@ -17,7 +18,8 @@ const allReducers = combineReducers({
     addUserData: addUser,
     editUserData: editUser,
     addBookData: addBook,
-    notificationsData: notifications
+    notificationsData: notifications,
+    profileData: profile
 });
 
 export default allReducers;

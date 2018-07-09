@@ -10,6 +10,8 @@ import {isEmpty} from '../../../../core/coreUtils';
 
 const mapStateToProps = (state) => {
     return {
+        userData: state.commonData.userData,
+        profileLogin: state.profileData.profileLogin,
         profileName: state.profileData.profileName,
         nameError: state.profileData.nameError,
         errorText: state.profileData.errorText,
@@ -34,6 +36,17 @@ class ProfileComponent extends Component {
         let {setTitle} = this.props;
 
         setTitle('Профиль');
+    }
+
+    componentDidMount() {
+
+        const {userData: {user = {}}, setFormData} = this.props;
+        const {userLogin, userName} = user;
+
+        setFormData({
+            profileLogin: userLogin,
+            profileName: userName
+        });
     }
 
     _renderError() {
@@ -64,18 +77,18 @@ class ProfileComponent extends Component {
 
     _handleClick() {
 
-        const {asyncEditProfile, disabled, userName} = this.props;
+        const {asyncEditProfile, disabled, profileName} = this.props;
 
         if (disabled) {
             return;
         }
 
-        asyncEditProfile(userName);
+        asyncEditProfile(profileName);
     }
 
     _renderProfileForm() {
 
-        const {profileLogin, profileName, disabled} = this.props;
+        const {profileLogin, profileName, nameError, disabled} = this.props;
 
         return (
             <div key={2} className="user-form__container">
@@ -122,7 +135,7 @@ class ProfileComponent extends Component {
 
     _renderProfile() {
         
-        const {userLogin, userName, userIsAdmin, disabled} = this.props;
+        const {profileLogin, profileName, disabled} = this.props;
         
         let profileArray = [];
 
@@ -140,7 +153,7 @@ class ProfileComponent extends Component {
             <div key={3} className="user-form__row buttons">
                 <button
                     className="user-form__button"
-                    disabled={disabled || isEmpty(userLogin) || isEmpty(userName)}
+                    disabled={disabled || isEmpty(profileLogin) || isEmpty(profileName)}
                     onClick={this._handleClick.bind(this)}
                 >
                     Редактировать
