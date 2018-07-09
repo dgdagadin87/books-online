@@ -52,7 +52,7 @@ class Login extends Component {
 
     _renderErrorItem(error, index) {
 
-        return <div key={index} style={{color: 'red'}}>{error}</div>;
+        return <div key={index}>{error}</div>;
     }
 
     _renderServerErrors() {
@@ -64,7 +64,7 @@ class Login extends Component {
         }
 
         return (
-            <div>
+            <div className="login-error-block">
                 {serverErrors.map((item, index) => this._renderErrorItem(item, index))}
             </div>
         );
