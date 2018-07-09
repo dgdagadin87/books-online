@@ -7,16 +7,10 @@ class ModalWindow extends Component {
         const {innerHeight, innerWidth} = window;
 
         return (
-            <div
+            <div className="modal__root"
                 style={{
-                    top: '0',
-                    left: '0',
                     width: innerWidth,
-                    height: innerHeight,
-                    zIndex:'100',
-                    position: 'fixed',
-                    background: 'rgba(0,0,0,0.5)',
-                    display: 'table'
+                    height: innerHeight
                 }}
             >
                 {this.props.children}

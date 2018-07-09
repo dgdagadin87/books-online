@@ -1334,12 +1334,21 @@ body {
     color: #999999;
 }
 
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-    .login-block input[type="text"], .login-block input[type="password"] {
-        width: 345px;
-    }
+.modal__root {
+    top: 0;
+    left: 0;
+    z-index: 100;
+    position: fixed;
+    background: rgba(0,0,0,0.5);
+    display: table;
 }
 
 .clear-both {
     clear: both;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .login-block input[type="text"], .login-block input[type="password"] {
+        width: 345px;
+    }
 }
