@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'bookssite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'books',
+        'NAME': 'books-online',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
