@@ -38,5 +38,5 @@ def api_deletebook_controller(helpers, sessions, request, book_id):
     return response({
         'data': dict(),
         'message': None,
-        'isSuccess': True
+        'success': True
     })

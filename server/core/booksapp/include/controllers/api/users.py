@@ -39,7 +39,7 @@ def api_users_controller(helpers, sessions, request):
     return response({
         'data': return_data,
         'message': None,
-        'isSuccess': True
+        'success': True
     })
 
 
@@ -73,6 +73,8 @@ def api_users_get_correct_sort_field(sort_field):
 def api_users_get_pagination(request):
 
     page = request.GET.get('page')
+    if page is None:
+        page = 1
     page = int(page)
 
     try:

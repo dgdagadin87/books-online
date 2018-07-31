@@ -45,5 +45,5 @@ def api_deleteuser_controller(helpers, sessions, request, user_id):
     return response({
         'data': dict(),
         'message': None,
-        'isSuccess': True
+        'success': True
     })

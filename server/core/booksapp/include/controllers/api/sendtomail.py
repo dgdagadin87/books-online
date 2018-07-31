@@ -54,11 +54,11 @@ def api_sendtomail_controller(helpers, sessions, request, book_id):
         message.send()
     except Exception as e:
         print(e)
-        return response({'message': 'При отправке письма произошла непредвиденная ошибка', 'isSuccess': False})
+        return response({'message': 'При отправке письма произошла непредвиденная ошибка', 'success': False})
 
     # Возврат, если все нормально
     return response({
         'data': {},
         'message': None,
-        'isSuccess': True
+        'success': True
     })

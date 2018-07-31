@@ -40,7 +40,7 @@ def api_allbooks_controller(helpers, sessions, request):
     return response({
         'data': return_data,
         'message': None,
-        'isSuccess': True
+        'success': True
     })
 
 

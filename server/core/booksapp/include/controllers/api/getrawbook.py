@@ -51,5 +51,5 @@ class GetRawBookController(BaseController):
                 'bookId': book_id
             },
             'message': message,
-            'isSuccess': is_success
+            'success': is_success
         })

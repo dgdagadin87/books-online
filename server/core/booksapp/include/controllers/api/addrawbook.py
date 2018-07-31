@@ -115,5 +115,5 @@ class AddRawBookController(BaseController):
         return self.response_to_client({
             'data': {},
             'message': message,
-            'isSuccess': is_success
+            'success': is_success
         })

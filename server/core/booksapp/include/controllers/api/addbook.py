@@ -51,7 +51,7 @@ class AddBookController(BaseController):
                 'paging': self._meta.get('paging')
             },
             'message': None,
-            'isSuccess': True
+            'success': True
         })
 
     def _set_sites_list(self):

@@ -36,5 +36,5 @@ def api_getuser_controller(helpers, sessions, request, user_id):
     return response({
         'data': user_data,
         'message': None,
-        'isSuccess': True
+        'success': True
     })

@@ -50,5 +50,5 @@ def api_addtomybooks_controller(helpers, sessions, request, book_id):
     return response({
         'data': dict(),
         'message': None,
-        'isSuccess': True
+        'success': True
     })

@@ -26,7 +26,9 @@ def api_common_controller(helpers, sessions, request):
             },
             'title': api_common_get_title(),
             'headers': api_common_get_headers(user_info)
-        }
+        },
+        'message': None,
+        'success': True
     }
 
     # Возврат

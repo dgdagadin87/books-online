@@ -50,7 +50,7 @@ def api_mybooks_controller(helpers, sessions, request):
     return response({
         'data': return_data,
         'message': None,
-        'isSuccess': True
+        'success': True
     })
 
 

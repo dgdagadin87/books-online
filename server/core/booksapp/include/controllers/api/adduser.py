@@ -71,7 +71,7 @@ def api_adduser_controller(helpers, sessions, request):
     return response({
         'data': {'hasError': False, 'errorText': None},
         'message': None,
-        'isSuccess': True
+        'success': True
     })
 
 
@@ -82,7 +82,7 @@ def add_user_standart_json_error(error_text):
             'errorText': error_text
         },
         'message': None,
-        'isSuccess': True
+        'success': True
     }
 
 

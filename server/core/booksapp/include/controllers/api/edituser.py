@@ -64,5 +64,5 @@ def api_edituser_controller(helpers, sessions, request, user_id):
     return response({
         'data': {'hasError': False, 'errorText': None},
         'message': None,
-        'isSuccess': True
+        'success': True
     })
