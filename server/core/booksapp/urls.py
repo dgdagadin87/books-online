@@ -26,5 +26,7 @@ urlpatterns = [
 	url(r'^api/getrawbook',                  views.api_getrawbook, name='api_getrawbook'),
 	url(r'^api/addrawbook',                  views.api_addrawbook, name='api_addrawbook'),
 	url(r'^api/downloadrawbook/(?P<id>\d+)$',views.api_downloadrawbook, name='api_downloadbook'),
+	url(r'^api/getnotifyinfo',               views.api_getnotifyinfo, name='api_getnotifyinfo'),
+
 	url(r'^test/gettestbook',                views.test_gettestbook, name='test_gettestbook'),
 ]
