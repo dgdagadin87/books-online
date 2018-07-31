@@ -27,8 +27,9 @@ export const asyncLogin = (email, password) => {
 
         Request.send({
             url: createUrl(defaultSettings, urlSettings['login']),
-            data: JSON.stringify({email, password}),
-            method: 'POST'
+            data: {login:email, pass:password},
+            type: 'post',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
         })
         .then((data) => {
 

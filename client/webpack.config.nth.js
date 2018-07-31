@@ -8,8 +8,8 @@ var config = {
     devtool: 'eval-source-map',
     entry:  __dirname + "/resources/js/applications/NAUTH/Application.jsx",
     output: {
-        path: __dirname + "/resources/js/bundle",
-        filename: "bundle.js"
+        path: __dirname + "/../server/core/booksapp/static/js",
+        filename: "login.js"
     },
     module: {
         loaders: [

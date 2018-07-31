@@ -17,9 +17,9 @@ export default class Request {
                 success: (result) => {
 
                     const errorCodes = ['NOT_AUTH', 'ACCESS_DENIED'];
-                    const {errorCode = '', isSuccess} = result;
+                    const {errorCode = '', success} = result;
 
-                    if (!isSuccess) {
+                    if (!success) {
                         if (errorCodes.indexOf(errorCode) !== -1) {
                             window.location.href = '/';
                             return false;

@@ -27,7 +27,8 @@ function applyParams (object, config) {
 }
 
 function createUrl (settings, url) {
-    return settings['serverProtocol'] + '://' + settings['serverHost'] + ':' + settings['serverPort'] + url;
+    //return settings['serverProtocol'] + '://' + settings['serverHost'] + ':' + settings['serverPort'] + url;
+    return url;
 }
 
 export {isEmpty, createUrl, applyParams, emptyFunction, checkEmail};
