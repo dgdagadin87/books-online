@@ -3,7 +3,7 @@
 __pycache__
 server/core/booksenv
 server/core/booksapp/migrations
-server/core/.idea
+.idea
 node_modules
 npm-debug.log
 .DS_Store
