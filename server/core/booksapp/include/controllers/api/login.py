@@ -11,7 +11,7 @@ def api_login_controller(request, helpers):
             'success': False,
             'message': 'Неизвестная ошибка'
         })
-    print(request.method)
+
     post_values = request.POST
     login_value = post_values.get('login')
     password_value = post_values.get('pass')
