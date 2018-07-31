@@ -1,0 +1,16 @@
+{% load staticfiles %}
+{% csrf_token %}
+<!DOCTYPE HTML>
+<html lang="ru">
+    <head>
+        <title>Войти в систему</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta content="ie=edge" http-equiv="x-ua-compatible">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body id="main-body">
+        <div>
+            Подождите, идет загрузка общих компонентов...</div>
+            <script src="{% static 'js/login.js' %}"></script>
+    </body>
+</html>
