@@ -18,13 +18,14 @@ class CommonController(BaseController):
         user_info = self.get_user_data()
 
         # Объект возврата
+        user_is_admin = True if user_info.user_is_admin == 'yes' else False
         return_object = {
             'data': {
                 'user': {
                     'userId': user_info.user_id,
                     'userLogin': user_info.user_login,
                     'userName': user_info.user_name,
-                    'userIsAdmin': True if user_info.user_is_admin == 'yes' else False
+                    'userIsAdmin': user_is_admin
                 },
                 'title': self._get_title()
             },
