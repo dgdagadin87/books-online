@@ -35,7 +35,7 @@ class BaseController:
 
         self._user_data = user_data
 
-        if user_data.user_error is True:
+        if user_data['user_error'] is True:
             self._set_response_error(None, None)
 
     def base_checks(self):
@@ -44,6 +44,25 @@ class BaseController:
             error_message = base_checks.message if base_checks.message else None
             error_data = base_checks.data if base_checks.data else None
             self._set_response_error(error_message, error_data)
+
+    def get_user_data(self, only_user=True):
+        if only_user is True:
+            return self._user_data['user']
+
+        return self._user_data
+
+    def response_to_client(self, json_data):
+
+        # Если есть ошибка, возвращаем ее
+        if self._success is False:
+            return self._json_response({
+                'success': False,
+                'message': self._error,
+                'data': self._error_data
+            })
+
+        # Если все хорошо, возвращаем данные
+        return self._json_response(json_data)
 
     # Абстрактный метод
     def run(self):
