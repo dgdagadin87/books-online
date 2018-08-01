@@ -42,7 +42,7 @@ def api_logout(request):
 
 @csrf_exempt
 def api_common(request):
-    return api_common_controller(BooksHelpers, BooksSessions, request)
+    return api_common_controller(request)
 
 
 @csrf_exempt

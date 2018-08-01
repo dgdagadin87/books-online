@@ -1,92 +1,39 @@
-from django.http import JsonResponse
+from ...abstract.base_controller2 import BaseController
 
 
-def api_common_controller(helpers, sessions, request):
+def api_common_controller(request):
 
-    # Ответ
-    response = JsonResponse
+    main_controller = CommonController('common', request, False)
+    return main_controller.run()
 
-    # Пользователь
-    user_dict = sessions.check_if_authorized(request, True)
-    user_info = user_dict['user']
 
-    # Базовые проверки
-    base_checks = helpers.base_auth_checks(user_dict, response)
-    if base_checks is not None:
-        return base_checks
+class CommonController(BaseController):
 
-    # объект возврата
-    return_object = {
-        'data': {
-            'user': {
-                'userId': user_info.user_id,
-                'userLogin': user_info.user_login,
-                'userName': user_info.user_name,
-                'userIsAdmin': True if user_info.user_is_admin == 'yes' else False
+    def run(self):
+
+        # Базовые проверки
+        self.base_checks()
+
+        # Объект пользователя
+        user_info = self.get_user_data()
+
+        # Объект возврата
+        return_object = {
+            'data': {
+                'user': {
+                    'userId': user_info.user_id,
+                    'userLogin': user_info.user_login,
+                    'userName': user_info.user_name,
+                    'userIsAdmin': True if user_info.user_is_admin == 'yes' else False
+                },
+                'title': self._get_title()
             },
-            'title': api_common_get_title(),
-            'headers': api_common_get_headers(user_info)
-        },
-        'message': None,
-        'success': True
-    }
+            'message': None,
+            'success': True
+        }
 
-    # Возврат
-    return response(return_object)
+        # Возврат
+        return self.response_to_client(return_object)
 
-
-def api_common_get_headers(user_info):
-
-    headers_list = list()
-
-    headers_list.append({
-        'headerId': 1,
-        'headerName': 'Мои книги',
-        'headerUrl': '/',
-        'selected': False,
-        'outer': False,
-        'admin': False
-    })
-
-    headers_list.append({
-        'headerId': 2,
-        'headerName': 'Все книги',
-        'headerUrl': '/allbooks',
-        'selected': False,
-        'outer': False,
-        'admin': False
-    })
-
-    headers_list.append({
-        'headerId': 3,
-        'headerName': 'Добавить книгу',
-        'headerUrl': '/addbook',
-        'selected': False,
-        'outer': False,
-        'admin': False
-    })
-
-    if user_info.user_is_admin == 'yes':
-        headers_list.append({
-            'headerId': 5,
-            'headerName': 'Пользователи',
-            'headerUrl': '/users',
-            'selected': False,
-            'outer': False,
-            'admin': True
-        })
-
-    headers_list.append({
-        'headerId': 5,
-        'headerName': 'О программе',
-        'headerUrl': '/about',
-        'selected': False,
-        'outer': False,
-        'admin': False
-    })
-
-    return headers_list
-
-
-def api_common_get_title():
-    return 'Приложение "Книги" - начало'
+    def _get_title(self):
+        return 'Приложение "Книги" - начало'
