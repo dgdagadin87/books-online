@@ -27,6 +27,7 @@ class CommonController(BaseController):
                     'userName': user_info.user_name,
                     'userIsAdmin': user_is_admin
                 },
+                'notifications': self._get_notifications(),
                 'title': self._get_title()
             },
             'message': None,
@@ -35,6 +36,20 @@ class CommonController(BaseController):
 
         # Возврат
         return self.response_to_client(return_object)
+
+    def _get_notifications(self):
+        return {
+            'notReadCount': 1,
+            'notifications': [
+                {
+                    'id': 1,
+                    'status': 'success',
+                    'bookId': 11,
+                    'bookName': 'Синий мопс счастья',
+                    'type': 'add'
+                }
+            ]
+        }
 
     def _get_title(self):
         return 'Приложение "Книги" - начало'
