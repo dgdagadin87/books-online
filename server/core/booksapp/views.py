@@ -57,7 +57,7 @@ def api_mybooks(request):
 
 @csrf_exempt
 def api_users(request):
-    return api_users_controller(BooksHelpers, BooksSessions, request)
+    return api_users_controller(request)
 
 
 @csrf_exempt

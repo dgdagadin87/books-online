@@ -1,127 +1,131 @@
 from django.http import JsonResponse
 from booksapp.models import Users
 from math import ceil
+from ...abstract.base_controller2 import BaseController, error_decorator
 
 
-def api_users_controller(helpers, sessions, request):
+def api_users_controller(request):
 
-    # Ответ
-    response = JsonResponse
-
-    # Пользователь
-    user_dict = sessions.check_if_authorized(request, True)
-
-    # Базовые проверки
-    base_checks = helpers.base_auth_checks(user_dict, response, True)
-    if base_checks is not None:
-        return base_checks
-
-    # Объект ответа
-    return_data = dict()
-
-    # Получение объекта постраничной навигации
-    pagination_data = api_users_get_pagination(request)
-    if pagination_data is False:
-        return response({'success': False, 'message': 'Произошла непредвиденная ошибка'})
-    return_data['paging'] = pagination_data
-
-    # Получение объекта фильтра
-    filter_data = api_users_get_filter(request, pagination_data)
-    return_data['filter'] = filter_data
-
-    # Получение списка пользователей
-    collection_data = api_users_get_collection(filter_data, pagination_data)
-    if collection_data is False:
-        return response({'success': False, 'message': 'Произошла непредвиденная ошибка'})
-    return_data['collection'] = collection_data
-
-    # Возврат
-    return response({
-        'data': return_data,
-        'message': None,
-        'success': True
-    })
+    main_controller = UsersController('users', request, True)
+    return main_controller.run()
 
 
-def api_users_get_filter(request, pagination):
+class UsersController(BaseController):
 
-    # Сортировка
-    sort_type = request.GET.get('sortType')
-    sort_field = request.GET.get('sortField')
+    def run(self):
 
-    sort_type = 'ASC' if sort_type == 'ASC' else 'DESC'
-    sort_fields = ['userLogin', 'userName']
-    sort_field = sort_field if sort_field in sort_fields else 'userName'
+        self._error_message = 'Произошла непредвиденная ошибка (пользователи)'
 
-    return {
-        'sortField': sort_field,
-        'sortType': sort_type,
-        'page': pagination['page']
-    }
+        # Базовые проверки
+        self.base_checks()
 
+        # Объект возврата
+        self._return_object = {}
 
-def api_users_get_correct_sort_field(sort_field):
+        # Пагинация
+        self._set_paging()
 
-    sort_assocs = {
-        'userLogin': 'user_login',
-        'userName': 'user_name'
-    }
+        # Фильтр
+        self._set_filter()
 
-    return sort_assocs[sort_field]
+        # Список
+        self._set_collection()
 
+        # Возврат
+        return self.response_to_client(self._return_object)
 
-def api_users_get_pagination(request):
+    @error_decorator
+    def _set_filter(self):
 
-    page = request.GET.get('page')
-    if page is None:
-        page = 1
-    page = int(page)
+        request = self._request
 
-    try:
-        users_count = Users.objects.count()
-        users_count = int(users_count)
-    except Exception:
-        return False
+        if self._return_object['paging'] is None:
+            return
 
-    num_of_pages = 1 if users_count < 1 else ceil(users_count/10)
+        pagination = self._return_object['paging']
 
-    if page < 1:
-        page = 1
-    elif page > num_of_pages:
-        page = num_of_pages
+        sort_type = request.GET.get('sortType')
+        sort_field = request.GET.get('sortField')
 
-    return {
-        'page': page,
-        'pages': num_of_pages,
-        'totalCount': users_count
-    }
+        sort_type = 'ASC' if sort_type == 'ASC' else 'DESC'
+        sort_fields = ['userLogin', 'userName']
+        sort_field = sort_field if sort_field in sort_fields else 'userName'
 
+        self._return_object['filter'] = {
+            'sortField': sort_field,
+            'sortType': sort_type,
+            'page': pagination['page']
+        }
 
-def api_users_get_collection(filter, pagination):
+    @error_decorator
+    def _set_paging(self):
 
-    page = pagination['page']
+        request = self._request
 
-    users_list = []
+        page = request.GET.get('page')
+        if page is None:
+            page = 1
+        page = int(page)
 
-    limit_value = 10*(page - 1)
-    offset_value = 10*page
+        try:
+            users_count = Users.objects.count()
+            users_count = int(users_count)
+        except Exception:
+            self._set_response_error(message=self._error_message)
+            return
 
-    sort_preffix = '' if filter['sortType'] == 'ASC' else '-'
+        num_of_pages = 1 if users_count < 1 else ceil(users_count / 10)
 
-    correct_sort_field = api_users_get_correct_sort_field(filter['sortField'])
+        if page < 1:
+            page = 1
+        elif page > num_of_pages:
+            page = num_of_pages
 
-    try:
-        users_collection = Users.objects.filter().order_by(sort_preffix+correct_sort_field)[limit_value:offset_value]
-    except Exception:
-        return False
+        self._return_object['paging'] = {
+            'page': page,
+            'pages': num_of_pages,
+            'totalCount': users_count
+        }
 
-    for current_user in users_collection:
+    @error_decorator
+    def _set_collection(self):
 
-        users_list.append({
-            'userId': current_user.user_id,
-            'userLogin': current_user.user_login,
-            'userName': current_user.user_name,
-            'userIsAdmin': True if current_user.user_is_admin == 'yes' else False
-        })
+        if self._return_object['paging'] is None or self._return_object['filter'] is None:
+            return
 
-    return users_list
+        pagination = self._return_object['paging']
+        filter = self._return_object['filter']
+
+        page = pagination['page']
+
+        users_list = []
+
+        limit_value = 10 * (page - 1)
+        offset_value = 10 * page
+
+        sort_preffix = '' if filter['sortType'] == 'ASC' else '-'
+
+        correct_sort_field = self._get_correct_sort_field(filter['sortField'])
+
+        try:
+            users_collection = Users.objects.filter().order_by(sort_preffix + correct_sort_field)[limit_value:offset_value]
+        except Exception:
+            self._set_response_error(message=self._error_message)
+            return
+
+        for current_user in users_collection:
+            users_list.append({
+                'userId': current_user.user_id,
+                'userLogin': current_user.user_login,
+                'userName': current_user.user_name,
+                'userIsAdmin': True if current_user.user_is_admin == 'yes' else False
+            })
+
+        self._return_object['collection'] = users_list
+
+    def _get_correct_sort_field(self, sort_field):
+        sort_assocs = {
+            'userLogin': 'user_login',
+            'userName': 'user_name'
+        }
+        return sort_assocs[sort_field]
