@@ -62,7 +62,11 @@ class BaseController:
             })
 
         # Если все хорошо, возвращаем данные
-        return self._json_response(json_data)
+        return self._json_response({
+                'success': True,
+                'message': None,
+                'data': json_data
+            })
 
     # Абстрактный метод
     def run(self):

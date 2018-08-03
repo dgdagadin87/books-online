@@ -1,144 +1,190 @@
-from django.http import JsonResponse
 from booksapp.models import Books_2_users, Books, Sites
 from math import ceil
 from django.db.models import Q
-from .allbooks import api_allbooks_get_filter, api_allbooks_get_correct_sort_field, api_allbooks_get_size
+from ...abstract.base_controller2 import BaseController, error_decorator
 
 
-def api_mybooks_controller(helpers, sessions, request):
+def api_mybooks_controller(request):
 
-    # Ответ
-    response = JsonResponse
-
-    # Пользователь
-    user_dict = sessions.check_if_authorized(request, True)
-    user_info = user_dict['user']
-
-    # Базовые проверки
-    base_checks = helpers.base_auth_checks(user_dict, response)
-    if base_checks is not None:
-        return base_checks
-
-    # Объект ответа
-    return_data = dict()
-
-    # Получение полного списка ИД книг
-    try:
-        book_ids = Books_2_users.objects.filter(user_id_id=user_info.user_id).distinct().values_list('book_id_id', flat=True)
-    except Books_2_users.DoesNotExist:
-        book_ids = []
-    except Exception:
-        return response({'success': False, 'message': 'Произошла непредвиденная ошибка'})
-
-    # Получение объекта постраничной навигации
-    pagination_data = api_mybooks_get_pagination(request, book_ids)
-    if pagination_data is False:
-        return response({'success': False, 'message': 'Произошла непредвиденная ошибка'})
-    return_data['paging'] = pagination_data
-
-    # Получение объекта фильтра
-    filter_data = api_allbooks_get_filter(request, pagination_data)
-    return_data['filter'] = filter_data
-
-    # Получение списка книг
-    collection_data = api_mybooks_get_collection(filter_data, pagination_data, book_ids)
-    if collection_data is False:
-        return response({'success': False, 'message': 'Произошла непредвиденная ошибка'})
-    return_data['collection'] = collection_data
-
-    # Возврат
-    return response({
-        'data': return_data,
-        'message': None,
-        'success': True
-    })
+    main_controller = MyBooksController('myBooks', request, False)
+    return main_controller.run()
 
 
-def api_mybooks_get_pagination(request, book_ids):
+class MyBooksController(BaseController):
 
-    search_term = str(request.GET.get('searchTerm'))
+    def run(self):
 
-    page = request.GET.get('page')
-    page = int(page)
+        self._error_message = 'Произошла непредвиденная ошибка (мои книги)'
 
-    try:
-        books_count = Books.objects.filter(book_id__in=book_ids).filter(
-            Q(book_name__icontains=search_term)
-            |
-            Q(book_author__icontains=search_term)
-            |
-            Q(book_genre__icontains=search_term)
-            |
-            Q(book_short_desc__icontains=search_term)
-        ).count()
-        books_count = int(books_count)
-    except Exception:
-        return False
+        # Базовые проверки
+        self.base_checks()
 
-    num_of_pages = 1 if books_count < 1 else ceil(books_count/10)
+        # Объект возврата
+        self._return_object = {}
 
-    if page < 1:
-        page = 1
-    elif page > num_of_pages:
-        page = num_of_pages
+        # Объект пользователя
+        user_info = self.get_user_data()
 
-    return {
-        'page': page,
-        'pages': num_of_pages,
-        'totalCount': books_count
-    }
+        # Получение полного списка ИД книг
+        try:
+            self._book_ids = Books_2_users.objects.filter(user_id_id=user_info.user_id).distinct().values_list('book_id_id', flat=True)
+        except Books_2_users.DoesNotExist:
+            self._book_ids = []
+        except Exception:
+            return self._set_response_error(message=self._error_message)
 
+        # Пагинация
+        self._set_paging()
 
-def api_mybooks_get_collection(filter, pagination, book_ids):
+        # Фильтр
+        self._set_filter()
 
-    search_term = filter['searchTerm']
+        # Список
+        self._set_collection()
 
-    page = int(pagination['page'])
+        # Возврат
+        return self.response_to_client(self._return_object)
 
-    sites_list = dict()
-    sites_collection = Sites.objects.all()
-    for current_site in sites_collection:
-        sites_list[int(current_site.site_id)] = {
-            'site_name': current_site.site_name,
-            'site_url': current_site.site_url
+    @error_decorator
+    def _set_paging(self):
+
+        request = self._request
+
+        search_term = str(request.GET.get('searchTerm'))
+
+        page = request.GET.get('page')
+        page = int(page)
+
+        try:
+            books_count = Books.objects.filter(book_id__in=self._book_ids).filter(
+                Q(book_name__icontains=search_term)
+                |
+                Q(book_author__icontains=search_term)
+                |
+                Q(book_genre__icontains=search_term)
+                |
+                Q(book_short_desc__icontains=search_term)
+            ).count()
+            books_count = int(books_count)
+        except Exception:
+            return self._set_response_error(message=self._error_message)
+
+        num_of_pages = 1 if books_count < 1 else ceil(books_count / 10)
+
+        if page < 1:
+            page = 1
+        elif page > num_of_pages:
+            page = num_of_pages
+
+        self._return_object['paging'] = {
+            'page': page,
+            'pages': num_of_pages,
+            'totalCount': books_count
         }
 
-    books_list = []
+    @error_decorator
+    def _set_filter(self):
 
-    limit_value = 10 * (page - 1)
-    offset_value = 10 * page
+        if self._return_object['paging'] is None:
+            return
 
-    sort_preffix = '' if filter['sortType'] == 'ASC' else '-'
+        pagination = self._return_object['paging']
 
-    correct_sort_field = api_allbooks_get_correct_sort_field(filter['sortField'])
+        request = self._request
 
-    try:
-        books_collection = Books.objects.filter(book_id__in=book_ids).filter(
-            Q(book_name__icontains=search_term)
-            |
-            Q(book_author__icontains=search_term)
-            |
-            Q(book_genre__icontains=search_term)
-            |
-            Q(book_short_desc__icontains=search_term)
-        ).order_by(sort_preffix + correct_sort_field)[limit_value:offset_value]
-    except Exception:
-        return False
+        # Сортировка
+        sort_type = request.GET.get('sortType')
+        sort_field = request.GET.get('sortField')
 
-    for current_book in books_collection:
+        sort_type = 'ASC' if sort_type == 'ASC' else 'DESC'
+        sort_fields = ['bookName', 'bookAuthor', 'bookSize', 'bookParentSite']
+        sort_field = sort_field if sort_field in sort_fields else 'bookName'
 
-        parent_site_id = int(current_book.parent_site_id_id)
-        parent_site = sites_list[parent_site_id]
+        # Строка поиска
+        search_term = str(request.GET.get('searchTerm'))
 
-        books_list.append({
-            'bookId': current_book.book_id,
-            'bookName': current_book.book_name,
-            'bookAuthor': current_book.book_author,
-            'bookGenre': current_book.book_genre,
-            'bookShortDesc': current_book.book_short_desc,
-            'bookSize': api_allbooks_get_size(current_book.book_size),
-            'parentSiteUrl': parent_site['site_url'],
-            'parentSiteName': parent_site['site_name']
-        })
+        self._return_object['filter'] = {
+            'sortField': sort_field,
+            'sortType': sort_type,
+            'searchTerm': search_term,
+            'page': pagination['page']
+        }
 
-    return books_list
+    @error_decorator
+    def _set_collection(self):
+
+        if self._return_object['paging'] is None or self._return_object['filter'] is None:
+            return
+
+        pagination = self._return_object['paging']
+        filter = self._return_object['filter']
+
+        search_term = filter['searchTerm']
+
+        page = int(pagination['page'])
+
+        sites_list = dict()
+        sites_collection = Sites.objects.all()
+        for current_site in sites_collection:
+            sites_list[int(current_site.site_id)] = {
+                'site_name': current_site.site_name,
+                'site_url': current_site.site_url
+            }
+
+        books_list = []
+
+        limit_value = 10 * (page - 1)
+        offset_value = 10 * page
+
+        sort_preffix = '' if filter['sortType'] == 'ASC' else '-'
+
+        correct_sort_field = self._get_correct_sort_field(filter['sortField'])
+
+        try:
+            books_collection = Books.objects.filter(book_id__in=self._book_ids).filter(
+                Q(book_name__icontains=search_term)
+                |
+                Q(book_author__icontains=search_term)
+                |
+                Q(book_genre__icontains=search_term)
+                |
+                Q(book_short_desc__icontains=search_term)
+            ).order_by(sort_preffix + correct_sort_field)[limit_value:offset_value]
+        except Exception:
+            return self._set_response_error(message=self._error_message)
+
+        for current_book in books_collection:
+            parent_site_id = int(current_book.parent_site_id_id)
+            parent_site = sites_list[parent_site_id]
+
+            books_list.append({
+                'bookId': current_book.book_id,
+                'bookName': current_book.book_name,
+                'bookAuthor': current_book.book_author,
+                'bookGenre': current_book.book_genre,
+                'bookShortDesc': current_book.book_short_desc,
+                'bookSize': self._get_size(current_book.book_size),
+                'parentSiteUrl': parent_site['site_url'],
+                'parentSiteName': parent_site['site_name']
+            })
+
+        self._return_object['collection'] = books_list
+
+    def _get_correct_sort_field(self, sort_field):
+
+        sort_assocs = {
+            'bookName': 'book_name',
+            'bookAuthor': 'book_author',
+            'bookSize': 'book_size',
+            'bookParentSite': 'parent_site_id'
+        }
+
+        return sort_assocs[sort_field]
+
+    def _get_size(self, size):
+        if size < 1024:
+            return str(size) + ' Байт'
+        elif size >= 1024 and size < 1024 * 1024:
+            return str(ceil(size / 1024)) + ' КБайт'
+        elif size >= 1024 * 1024:
+            return str(ceil(size / (1024 * 1024))) + ' МБайт'

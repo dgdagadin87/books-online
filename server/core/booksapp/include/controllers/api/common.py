@@ -20,18 +20,14 @@ class CommonController(BaseController):
         # Объект возврата
         user_is_admin = True if user_info.user_is_admin == 'yes' else False
         return_object = {
-            'data': {
-                'user': {
-                    'userId': user_info.user_id,
-                    'userLogin': user_info.user_login,
-                    'userName': user_info.user_name,
-                    'userIsAdmin': user_is_admin
-                },
-                'notifications': self._get_notifications(),
-                'title': self._get_title()
+            'user': {
+                'userId': user_info.user_id,
+                'userLogin': user_info.user_login,
+                'userName': user_info.user_name,
+                'userIsAdmin': user_is_admin
             },
-            'message': None,
-            'success': True
+            'notifications': self._get_notifications(),
+            'title': self._get_title()
         }
 
         # Возврат
