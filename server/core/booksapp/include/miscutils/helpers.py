@@ -14,7 +14,7 @@ class BooksHelpers(object):
     @staticmethod
     def get_annotation(book_name, book_author, book_genre):
         book_annotation = 'Название книги - "' + str(book_name) + '", автор книги - ' + str(book_author) + ', жанр - ' + str(book_genre) + '. '
-        book_annotation += 'Данный файл был создан приложением "Книги". Приятного прочтения!'
+        book_annotation += 'Данный файл был создан приложением "Книги-Онлайн". Приятного прочтения!'
         return book_annotation
 
     @staticmethod
