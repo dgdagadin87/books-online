@@ -1,6 +1,16 @@
 from django.http import JsonResponse
 from booksapp.models import Users
-from .adduser import add_user_standart_json_error
+
+
+def add_user_standart_json_error(error_text):
+    return {
+        'data': {
+            'hasError': True,
+            'errorText': error_text
+        },
+        'message': None,
+        'success': True
+    }
 
 
 def api_getuser_controller(helpers, sessions, request, user_id):

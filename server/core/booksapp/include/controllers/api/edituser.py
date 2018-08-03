@@ -1,6 +1,5 @@
 from django.http import JsonResponse
 from booksapp.models import Users
-from .adduser import add_user_standart_json_error, add_user_check_login, add_user_check_name
 
 
 def api_edituser_controller(helpers, sessions, request, user_id):
@@ -66,3 +65,25 @@ def api_edituser_controller(helpers, sessions, request, user_id):
         'message': None,
         'success': True
     })
+
+def add_user_standart_json_error(error_text):
+    return {
+        'data': {
+            'hasError': True,
+            'errorText': error_text
+        },
+        'message': None,
+        'success': True
+    }
+
+
+def add_user_check_login(user_login):
+    pattern = re.compile(r"^[a-z][a-z0-9]{4,99}$", re.I | re.S)
+    findall_matches = pattern.findall(user_login)
+    result = False if len(findall_matches) < 1 else True
+    return result
+
+
+def add_user_check_name(user_name):
+    result = False if len(user_name) < 1 or len(user_name) > 100 else True
+    return result

@@ -51,7 +51,7 @@ class BaseController:
 
         return self._user_data
 
-    def response_to_client(self, json_data):
+    def response_to_client(self, json_data={}):
 
         # Если есть ошибка, возвращаем ее
         if self._success is False:
@@ -63,10 +63,10 @@ class BaseController:
 
         # Если все хорошо, возвращаем данные
         return self._json_response({
-                'success': True,
-                'message': None,
-                'data': json_data
-            })
+            'success': True,
+            'message': None,
+            'data': json_data
+        })
 
     # Абстрактный метод
     def run(self):
