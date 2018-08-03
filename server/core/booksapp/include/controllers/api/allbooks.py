@@ -57,7 +57,8 @@ class AllBooksController(MyBooksController):
             ).count()
             books_count = int(books_count)
         except Exception:
-            return self._set_response_error(message=self._error_message)
+            self._set_response_error(message=self._error_message)
+            return
 
         num_of_pages = 1 if books_count < 1 else ceil(books_count / 10)
 
@@ -113,7 +114,8 @@ class AllBooksController(MyBooksController):
                 Q(book_short_desc__icontains=search_term)
             ).order_by(sort_preffix + correct_sort_field)[limit_value:offset_value]
         except Exception:
-            return self._set_response_error(message=self._error_message)
+            self._set_response_error(message=self._error_message)
+            return
 
         for current_book in books_collection:
             parent_site_id = int(current_book.parent_site_id_id)

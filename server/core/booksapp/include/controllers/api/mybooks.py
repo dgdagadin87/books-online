@@ -31,7 +31,8 @@ class MyBooksController(BaseController):
         except Books_2_users.DoesNotExist:
             self._book_ids = []
         except Exception:
-            return self._set_response_error(message=self._error_message)
+            self._set_response_error(message=self._error_message)
+            return
 
         # Пагинация
         self._set_paging()
@@ -151,7 +152,8 @@ class MyBooksController(BaseController):
                 Q(book_short_desc__icontains=search_term)
             ).order_by(sort_preffix + correct_sort_field)[limit_value:offset_value]
         except Exception:
-            return self._set_response_error(message=self._error_message)
+            self._set_response_error(message=self._error_message)
+            return
 
         for current_book in books_collection:
             parent_site_id = int(current_book.parent_site_id_id)
