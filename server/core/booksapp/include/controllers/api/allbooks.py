@@ -1,7 +1,6 @@
 from booksapp.models import Books, Sites
 from django.db.models import Q
 from math import ceil
-
 from ...abstract.base_controller2 import error_decorator
 from .mybooks import MyBooksController
 
