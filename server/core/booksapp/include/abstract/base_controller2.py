@@ -41,8 +41,8 @@ class BaseController:
     def base_checks(self):
         base_checks = BooksHelpers.base_auth_checks_v2(self._user_data, self._check_is_admin)
         if base_checks is not None:
-            error_message = base_checks.message if base_checks.message else None
-            error_data = base_checks.data if base_checks.data else None
+            error_message = base_checks['message'] if base_checks['message'] else None
+            error_data = base_checks['data'] if base_checks['data'] else None
             self._set_response_error(error_message, error_data)
 
     def get_user_data(self, only_user=True):
