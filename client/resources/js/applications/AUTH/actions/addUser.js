@@ -14,7 +14,8 @@ export const asyncAddUser = (history, userLogin, userName, userIsAdmin) => {
         Request.send({
             type: 'post',
             url: createUrl(defaultSettings, urlSettings['addUser']),
-            data: JSON.stringify({userLogin, userName, userIsAdmin})
+            data: {userLogin, userName, userIsAdmin},
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
         })
         .then( (response) => {
 
