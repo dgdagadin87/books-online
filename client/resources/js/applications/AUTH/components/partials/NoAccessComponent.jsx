@@ -8,7 +8,11 @@ class NoAccessComponent extends React.Component {
 
     render() {
 
-        return (<div>У вас недостаточно прав для просмотра данной страницы.</div>);
+        return (
+            <div style={{width:'990px', margin:'auto'}}>
+                У вас недостаточно прав для просмотра данной страницы.
+            </div>
+        );
     }
 }
 
