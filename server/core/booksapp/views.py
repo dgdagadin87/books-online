@@ -47,7 +47,7 @@ def api_common(request):
 
 @csrf_exempt
 def api_allbooks(request):
-    return api_allbooks_controller(BooksHelpers, BooksSessions, request)
+    return api_allbooks_controller(request)
 
 
 @csrf_exempt
