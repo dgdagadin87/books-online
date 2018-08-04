@@ -44,7 +44,8 @@ export const asyncEditUser = (history, userId, userLogin, userName, userIsAdmin)
         Request.send({
             type: 'post',
             url: `${createUrl(defaultSettings, urlSettings['editUser'])}${userId}`,
-            data: JSON.stringify({userId, userLogin, userName, userIsAdmin})
+            data: {userId, userLogin, userName, userIsAdmin},
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
         })
             .then( (response) => {
 

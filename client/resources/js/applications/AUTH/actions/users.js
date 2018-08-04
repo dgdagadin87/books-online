@@ -15,7 +15,7 @@ export const asyncGetUsers = (collection, actionData, queryData) => {
 
         Request.send({
             url: createUrl(defaultSettings, urlSettings['users']),
-            data: JSON.stringify({...queryData, ...actionData})
+            data: {...queryData, ...actionData}
         })
         .then( (response) => {
 
