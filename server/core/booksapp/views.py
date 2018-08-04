@@ -77,7 +77,7 @@ def api_getuser(request, id):
 
 @csrf_exempt
 def api_edituser(request, id):
-    return api_edituser_controller(BooksHelpers, BooksSessions, request, id)
+    return api_edituser_controller(request, id)
 
 
 @csrf_exempt
