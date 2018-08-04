@@ -14,8 +14,6 @@ const pageSettings = {
 const urlSettings = {
     'common'       : '/api/common',
     'login'        : '/api/login',
-    'register'     : '/api/register',
-    'reset'        : '/api/reset',
 
     'myBooks'      : '/api/mybooks',
     'allBooks'     : '/api/allbooks',
