@@ -72,7 +72,7 @@ def api_adduser(request):
 
 @csrf_exempt
 def api_getuser(request, id):
-    return api_getuser_controller(BooksHelpers, BooksSessions, request, id)
+    return api_getuser_controller(request, id)
 
 
 @csrf_exempt
