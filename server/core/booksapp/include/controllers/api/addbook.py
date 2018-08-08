@@ -1,5 +1,5 @@
 from django.db.models import Q
-from ...abstract.base_controller import BaseController
+from ...abstract.base_controller2 import BaseController, error_decorator
 from booksapp.models import Sites, Books, Books_2_users
 from ...sites.ubooki.controller import UbookiCollection
 
@@ -13,54 +13,45 @@ def api_addbook_controller(request):
 class AddBookController(BaseController):
 
     def run(self):
-        base_checks = self.base_checks()
-        if base_checks is not None:
-            return self.response_to_client(base_checks)
 
-        # 0)Получение списка сайтов
-        get_sites_result = self._set_sites_list()
-        if get_sites_result is not None:
-            return self.standart_error()
+        self._error_message = 'Произошла непредвиденная ошибка (добавить книгу)'
 
-        # 1)Получение данных пришедших с клиента
+        # Базовые проверки
+        self.base_checks()
+
+        # Объект возврата
+        self._return_object = {}
+
+        # список сайтов
+        self._set_sites_list()
+
+        # данные пришедшие с клиента
         self._set_client_meta_data()
 
-        # 2)Получение данных по запросу из приложения (мои)
-        from_my_result = self._set_found_in_my()
-        if from_my_result is not None:
-            return self.standart_error()
+        # найдено в моих книгах
+        self._set_found_in_my()
 
-        # 2)Получение данных по запросу из приложения (все)
-        from_all_result = self._set_found_in_all()
-        if from_all_result is not None:
-            return self.standart_error()
+        # найдено во всех кингах
+        self._set_found_in_all()
 
-        # 3)Получение данных по запросу с выбранного сайта
-        get_data_result = self._set_from_site_data()
-        if get_data_result is not None:
-            return self.standart_error()
+        # список данных с сайта
+        self._set_from_site_data()
 
-        # 4)Возврат данных
-        return self.response_to_client({
-            'data': {
-                'collection': self._collection,
-                'isFoundInMy': self._found_in_my,
-                'isFoundInAll': self._found_in_all,
-                'sites': self._sites,
-                'filter': self._meta.get('filter'),
-                'paging': self._meta.get('paging')
-            },
-            'message': None,
-            'success': True
-        })
+        # возвращаемые метаданные
+        self._set_filter_and_paging()
 
+        # Возврат
+        return self.response_to_client(self._return_object)
+
+    @error_decorator
     def _set_sites_list(self):
 
         sites_list = []
         try:
             sites_collection = Sites.objects.all()
         except Exception:
-            return False
+            self._set_response_error(message=self._error_message)
+            return
 
         for current_site in sites_collection:
             sites_list.append({
@@ -68,8 +59,50 @@ class AddBookController(BaseController):
                 'name': current_site.site_name,
                 'url': current_site.site_url
             })
-        self._sites = sites_list
-        return None
+        self._return_object['sites'] = sites_list
+
+    @error_decorator
+    def _set_found_in_my(self):
+
+        if self._is_first_open():
+            self._return_object['isFoundInMy'] = False
+            return
+
+        user_info = self._user_data['user']
+        search_term = str(self._request.GET.get('searchTerm'))
+        try:
+            book_ids = Books_2_users.objects.filter(user_id_id=user_info.user_id).distinct().values_list('book_id_id', flat=True)
+        except Books_2_users.DoesNotExist:
+            book_ids = []
+        except Exception:
+            self._set_response_error(message=self._error_message)
+            return
+
+        try:
+            books_count = Books.objects.filter(book_id__in=book_ids).filter(Q(book_name__icontains=search_term)).count()
+            books_count = int(books_count)
+        except Exception:
+            self._set_response_error(message=self._error_message)
+            return
+
+        self._return_object['isFoundInMy'] = False if books_count < 1 else True
+
+    @error_decorator
+    def _set_found_in_all(self):
+
+        if self._is_first_open():
+            self._found_in_my = False
+            return
+
+        try:
+            search_term = str(self._request.GET.get('searchTerm'))
+            books_count = Books.objects.filter(Q(book_name__icontains=search_term)).count()
+            books_count = int(books_count)
+        except Exception:
+            self._set_response_error(message=self._error_message)
+            return
+
+        self._return_object['isFoundInAll'] = False if books_count < 1 else True
 
     def _set_client_meta_data(self):
 
@@ -90,65 +123,26 @@ class AddBookController(BaseController):
             }
         }
 
-    def _set_found_in_my(self):
-
-        if self._is_first_open():
-            self._found_in_all = False
-            return
-
-        user_info = self._user_data['user']
-        search_term = str(self._request.GET.get('searchTerm'))
-        try:
-            book_ids = Books_2_users.objects.filter(user_id_id=user_info.user_id).distinct().values_list('book_id_id', flat=True)
-        except Books_2_users.DoesNotExist:
-            book_ids = []
-        except Exception:
-            return False
-
-        try:
-            books_count = Books.objects.filter(book_id__in=book_ids).filter(Q(book_name__icontains=search_term)).count()
-            books_count = int(books_count)
-        except Exception:
-            return False
-
-        self._found_in_my = False if books_count < 1 else True
-
-        return None
-
-    def _set_found_in_all(self):
-
-        if self._is_first_open():
-            self._found_in_my = False
-            return
-
-        try:
-            search_term = str(self._request.GET.get('searchTerm'))
-            books_count = Books.objects.filter(Q(book_name__icontains=search_term)).count()
-            books_count = int(books_count)
-        except Exception:
-            return False
-
-        self._found_in_all = False if books_count < 1 else True
-
-        return None
-
     def _set_from_site_data(self):
 
-        self._collection = False
+        self._return_object['collection'] = False
 
         if self._is_first_open():
-            return None
+            return
 
         search_term = str(self._request.GET.get('searchTerm'))
         collection_constructor = self._get_site_collection_constructor()
         parser = collection_constructor(search_term)
         collection = parser.get_collection()
-        if collection == False:
-            return False
+        if collection is False:
+            self._set_response_error(message=self._error_message)
+            return
 
-        self._collection = collection
+        self._return_object['collection'] = collection
 
-        return None
+    def _set_filter_and_paging(self):
+        self._return_object['filter'] = self._meta.get('filter')
+        self._return_object['paging'] = self._meta.get('paging')
 
     def _is_first_open(self):
         filter = self._meta.get('filter')
