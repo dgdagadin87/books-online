@@ -1,4 +1,3 @@
-from django.http import JsonResponse
 from booksapp.models import Books, Cached_books
 from django.core.mail import EmailMessage
 from ...miscutils.sessions import BooksHelpers as helpers
