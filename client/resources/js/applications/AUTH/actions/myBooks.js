@@ -44,9 +44,9 @@ export const asyncSendMyBookToMail = (bookId, emailToSend) => {
         Request.send({
             url: urlToSend,
             type: 'post',
-            data: JSON.stringify({
+            data: {
                 email: emailToSend
-            })
+            }
         })
         .then( () => {
 
