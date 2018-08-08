@@ -1,5 +1,3 @@
-import re
-from django.http import JsonResponse
 from booksapp.models import Users
 from .adduser import AddUserController
 
