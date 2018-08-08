@@ -46,7 +46,8 @@ export const asyncSendMyBookToMail = (bookId, emailToSend) => {
             type: 'post',
             data: {
                 email: emailToSend
-            }
+            },
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
         })
         .then( () => {
 
