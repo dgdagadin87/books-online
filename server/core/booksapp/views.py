@@ -102,7 +102,7 @@ def api_downloadbook(request, id):
 
 @csrf_exempt
 def api_sendtomail(request, id):
-    return api_sendtomail_controller(BooksHelpers, BooksSessions, request, id)
+    return api_sendtomail_controller(request, id)
 
 
 @csrf_exempt
