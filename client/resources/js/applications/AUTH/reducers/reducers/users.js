@@ -19,13 +19,12 @@ export default function (state = null, action) {
 
     switch (action.type) {
         case actions.USERS_STOP_LOADING:
-            return {...payload, disabled: false, globalLoading: false};
+            return {...returnState, ...payload, disabled: false, globalLoading: false};
         case actions.USERS_START_LOADING:
             return {...returnState, ...payload, disabled: true, globalLoading: false};
         case actions.USERS_START_GLOBAL_LOADING:
             return {...returnState, ...payload, disabled: false, globalLoading: true};
         default:
             return returnState;
-
     }
 }

@@ -36,7 +36,7 @@ export const asyncGetUsers = (collection, actionData, queryData) => {
     }
 };
 
-export const asyncDeleteUser = (userId, loadBooksCallback) => {
+export const asyncDeleteUser = (userId, loadUsersCallback) => {
     return dispatch => {
 
         const urlToSend = `${createUrl(defaultSettings, urlSettings['deleteUser'])}${userId}`;
@@ -52,7 +52,7 @@ export const asyncDeleteUser = (userId, loadBooksCallback) => {
         .then( () => {
 
             alert('Пользователь успешно удален.');
-            loadBooksCallback();
+            loadUsersCallback();
         })
         .catch((error) => {
 
