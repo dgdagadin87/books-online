@@ -5,7 +5,7 @@ from ...abstract.base_controller2 import BaseController
 
 def api_deletebook_controller(request, book_id):
 
-    main_controller = DeleteBookController('deleteBook', request, True)
+    main_controller = DeleteBookController('deleteBook', request, False)
     return main_controller.run(book_id)
 
 

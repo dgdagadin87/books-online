@@ -6,7 +6,7 @@ from ...abstract.base_controller2 import BaseController
 
 def api_sendtomail_controller(request, book_id):
 
-    main_controller = SendToMailController('sendToMail', request, True)
+    main_controller = SendToMailController('sendToMail', request, False)
     return main_controller.run(book_id)
 
 

@@ -122,7 +122,7 @@ def api_addrawbook(request):
 
 @csrf_exempt
 def api_downloadrawbook(request, id):
-    return api_downloadrawbook_controller(BooksHelpers, BooksSessions, request, id)
+    return api_downloadrawbook_controller(request, id)
 
 @csrf_exempt
 def api_getnotifyinfo(request):
