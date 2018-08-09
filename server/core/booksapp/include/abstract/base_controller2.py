@@ -7,6 +7,8 @@ class BaseController:
 
     def __init__(self, controller_name, request, check_is_admin):
 
+        self._error_message = 'Произошла непредвиденная ошибка'
+
         self.controller_name = controller_name
 
         self._request = request
@@ -67,6 +69,10 @@ class BaseController:
             'message': None,
             'data': json_data
         })
+
+    def return_error(self, message=None):
+        self._set_response_error(message=self._error_message if message is None else message)
+        return self.response_to_client()
 
     # Абстрактный метод
     def run(self):
