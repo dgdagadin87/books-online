@@ -97,7 +97,7 @@ def api_deletebook(request, id):
 
 @csrf_exempt
 def api_downloadbook(request, id):
-    return api_downloadbook_controller(BooksHelpers, BooksSessions, request, id)
+    return api_downloadbook_controller(request, id)
 
 
 @csrf_exempt
