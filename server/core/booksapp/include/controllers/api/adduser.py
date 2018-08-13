@@ -1,7 +1,7 @@
 import re
 from booksapp.models import Users
 from ...abstract.base_controller2 import BaseController
-from ...miscutils.sessions import BooksHelpers as helpers
+from ...miscutils.helpers import BooksHelpers as helpers
 
 
 def api_adduser_controller(request):
