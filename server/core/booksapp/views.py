@@ -62,7 +62,7 @@ def api_users(request):
 
 @csrf_exempt
 def api_addtomybooks(request, id):
-    return api_addtomybooks_controller(BooksHelpers, BooksSessions, request, id)
+    return api_addtomybooks_controller(request, id)
 
 
 @csrf_exempt

@@ -1,54 +1,55 @@
-from django.http import JsonResponse
 from booksapp.models import Books_2_users, Books
+from ...abstract.base_controller2 import BaseController
 
 
-def api_addtomybooks_controller(helpers, sessions, request, book_id):
+def api_addtomybooks_controller(request, book_id):
 
-    # Ответ
-    response = JsonResponse
+    main_controller = AddToMyBooksController('addToMyBooks', request, True)
+    return main_controller.run(book_id)
 
-    # Пользователь
-    user_dict = sessions.check_if_authorized(request, True)
-    user_info = user_dict['user']
 
-    # Базовые проверки
-    base_checks = helpers.base_auth_checks(user_dict, response)
-    if base_checks is not None:
-        return base_checks
+class AddToMyBooksController(BaseController):
 
-    # Проверка, существует ли пользователь
-    # Не нужно, т.к. выше это уже проверяется
+    def run(self, book_id):
 
-    # Проверка, существует ли книга, которую собираемся добавлять
-    try:
-        book_to_add = Books.objects.get(book_id=book_id)
-    except Books.DoesNotExist:
-        return response({'success': False, 'message': 'Выбранной книги не существует'})
-    except Exception:
-        return response({'success': False, 'message': 'Произошла непредвиденная ошибка'})
+        self._error_message = 'Произошла непредвиденная ошибка (добавить мою книгу)'
 
-    book_to_add_id = int(book_to_add.book_id)
+        request = self._request
 
-    # Проверка, существует ли кнмга в разделе "Мои книги"
-    try:
-        book_count = Books_2_users.objects.filter(book_id_id=book_to_add_id).filter(user_id_id=user_info.user_id).count()
-        books_count = int(book_count)
-    except Exception:
-        return response({'success': False, 'message': 'Произошла непредвиденная ошибка'})
+        # Базовые проверки
+        self.base_checks()
 
-    if books_count > 0:
-        return response({'success': False, 'message': 'Выбранная книга уже находится в разделе "Мои книги"'})
+        # Проверка, существует ли пользователь
+        # Не нужно, т.к. выше это уже проверяется
 
-    # Если все нормально, добавляем книгу
-    book_for_adding = Books_2_users(book_id_id=book_to_add_id, user_id_id=user_info.user_id)
-    try:
-        book_for_adding.save()
-    except Exception:
-        return response({'success': False, 'message': 'Произошла непредвиденная ошибка'})
+        # Проверка, существует ли книга, которую собираемся добавлять
+        try:
+            book_to_add = Books.objects.get(book_id=book_id)
+        except Books.DoesNotExist:
+            return self.return_error(message='Выбранной книги не существует')
+        except Exception:
+            return self.return_error()
 
-    # Возврат, если все нормально
-    return response({
-        'data': dict(),
-        'message': None,
-        'success': True
-    })
+        book_to_add_id = int(book_to_add.book_id)
+
+        # Проверка, существует ли кнмга в разделе "Мои книги"
+        user_info = self.get_user_data(True)
+        try:
+            book_count = Books_2_users.objects.filter(book_id_id=book_to_add_id).filter(
+                user_id_id=user_info.user_id).count()
+            books_count = int(book_count)
+        except Exception:
+            return self.return_error()
+
+        if books_count > 0:
+            return self.return_error('Выбранная книга уже находится в разделе "Мои книги"')
+
+        # Если все нормально, добавляем книгу
+        book_for_adding = Books_2_users(book_id_id=book_to_add_id, user_id_id=user_info.user_id)
+        try:
+            book_for_adding.save()
+        except Exception:
+            return self.return_error()
+
+        # Возврат, если все нормально
+        return self.response_to_client()
