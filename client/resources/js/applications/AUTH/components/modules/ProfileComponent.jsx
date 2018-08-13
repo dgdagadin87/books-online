@@ -83,7 +83,9 @@ class ProfileComponent extends Component {
             return;
         }
 
-        asyncEditProfile(profileName);
+        alert('Функционал в разработке');
+
+        //asyncEditProfile(profileName);
     }
 
     _renderProfileForm() {

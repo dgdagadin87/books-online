@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
 	url(r'^$',                               views.gui_central, name='gui_central'),
 	url(r'^(allbooks|addbook|users|about)$', views.gui_central, name='gui_central'),
+	url(r'^(profile)$',                      views.gui_central, name='gui_central'),
 	url(r'^(users/adduser)$',                views.gui_central, name='gui_central'),
 	url(r'^(users/edituser/(?P<id>\d+))$',   views.gui_central, name='gui_central'),
 
