@@ -87,7 +87,7 @@ def api_deleteuser(request, id):
 
 @csrf_exempt
 def api_deletemybook(request, id):
-    return api_deletemybook_controller(BooksHelpers, BooksSessions, request, id)
+    return api_deletemybook_controller(request, id)
 
 
 @csrf_exempt

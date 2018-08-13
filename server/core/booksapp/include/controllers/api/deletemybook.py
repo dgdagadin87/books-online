@@ -1,30 +1,30 @@
-from django.http import JsonResponse
 from booksapp.models import Books_2_users
+from ...abstract.base_controller2 import BaseController
 
 
-def api_deletemybook_controller(helpers, sessions, request, book_id):
+def api_deletemybook_controller(request, book_id):
 
-    # Ответ
-    response = JsonResponse
+    main_controller = DeleteMyBookController('deleteMyBook', request, False)
+    return main_controller.run(book_id)
 
-    # Пользователь
-    user_dict = sessions.check_if_authorized(request, True)
-    user_info = user_dict['user']
 
-    # Базовые проверки
-    base_checks = helpers.base_auth_checks(user_dict, response)
-    if base_checks is not None:
-        return base_checks
+class DeleteMyBookController(BaseController):
 
-    # Если все нормально, удаляем книгу
-    try:
-        Books_2_users.objects.filter(book_id_id=int(book_id), user_id_id=user_info.user_id).delete()
-    except Exception:
-        return response({'success': False, 'message': 'Произошла непредвиденная ошибка'})
+    def run(self, book_id):
 
-    # Возврат, если все нормально
-    return response({
-        'data': dict(),
-        'message': None,
-        'success': True
-    })
+        self._error_message = 'Произошла непредвиденная ошибка (удалить мою книгу)'
+
+        # Базовые проверки
+        self.base_checks()
+
+        # Пользователь
+        user_info = self.get_user_data(True)
+
+        # Если все нормально, удаляем книгу
+        try:
+            Books_2_users.objects.filter(book_id_id=int(book_id), user_id_id=user_info.user_id).delete()
+        except Exception:
+            return self.return_error()
+
+        # Возврат, если все нормально
+        return self.response_to_client()
