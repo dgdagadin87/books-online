@@ -59,10 +59,8 @@ export const asyncEditUser = (history, userId, userLogin, userName, userIsAdmin)
 
                 alert('Пользователь "' + userLogin + '" успешно отредактирован.');
 
-                dispatch({
-                    type: actions.EDIT_USER_CLEAR_FORM,
-                    payload: null
-                });
+                dispatch({ type: actions.EDIT_USER_CLEAR_FORM, payload: null });
+                dispatch({ type: actions.USERS_SET_DEFAULT, payload: null });
 
                 history.push('/users');
             })

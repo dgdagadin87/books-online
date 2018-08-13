@@ -29,10 +29,8 @@ export const asyncAddUser = (history, userLogin, userName, userIsAdmin) => {
 
             alert('Пользователь успешно добавлен.');
 
-            dispatch({
-                type: actions.ADD_USER_CLEAR_FORM,
-                payload: null
-            });
+            dispatch({type: actions.ADD_USER_CLEAR_FORM, payload: null});
+            dispatch({type: actions.USERS_SET_DEFAULT, payload: null});
 
             history.push('/users');
         })

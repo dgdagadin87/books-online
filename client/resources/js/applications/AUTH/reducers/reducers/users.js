@@ -24,6 +24,8 @@ export default function (state = null, action) {
             return {...returnState, ...payload, disabled: true, globalLoading: false};
         case actions.USERS_START_GLOBAL_LOADING:
             return {...returnState, ...payload, disabled: false, globalLoading: true};
+        case actions.USERS_SET_DEFAULT:
+            return {...initialState};
         default:
             return returnState;
     }
