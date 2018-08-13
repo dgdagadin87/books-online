@@ -1,9 +1,10 @@
 from django.shortcuts import render
+from ...miscutils.sessions import BooksSessions as sessions
 
 
-def gui_central_controller(books_sessions, request):
+def gui_central_controller(request):
 
-    user_dict = books_sessions.check_if_authorized(request)
+    user_dict = sessions.check_if_authorized(request)
     user_info = user_dict['user']
 
     if user_info:

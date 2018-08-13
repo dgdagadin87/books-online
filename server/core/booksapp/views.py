@@ -1,7 +1,5 @@
 from django.views.decorators.csrf import csrf_exempt
 
-from .include.miscutils.sessions import BooksSessions
-from .include.miscutils.helpers import BooksHelpers
 from .include.controllers.gui.central import gui_central_controller
 from .include.controllers.api.login import api_login_controller
 from .include.controllers.api.logout import api_logout_controller
@@ -27,7 +25,7 @@ from .include.controllers.test.gettestbook import test_gettestbook_controller
 
 
 def gui_central(request, url='', id=None):
-    return gui_central_controller(BooksSessions, request)
+    return gui_central_controller(request)
 
 
 @csrf_exempt
