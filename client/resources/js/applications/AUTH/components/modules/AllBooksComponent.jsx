@@ -7,7 +7,10 @@ import {pageSettings} from '../../../../config/settings';
 import { changeTitle } from '../../actions/common';
 import { asyncSendMyBookToMail } from '../../actions/myBooks';
 import {
-    asyncGetAllBooks, asyncDeleteBook } from '../../actions/allBooks';
+    asyncGetAllBooks,
+    asyncDeleteBook,
+    asyncAddBookToMyBooks
+} from '../../actions/allBooks';
 
 import PreloaderComponent from '../partials/LargePreloaderComponent';
 import SearchComponent from '../partials/SearchComponent';
@@ -34,6 +37,7 @@ function matchDispatchToProps(dispatch) {
     return bindActionCreators({
         setTitle: changeTitle,
         asyncLoadBooks: asyncGetAllBooks,
+        asyncAddBookToMyBooks: asyncAddBookToMyBooks,
         asyncSendBookToMail: asyncSendMyBookToMail,
         asyncDeleteBook: asyncDeleteBook
     }, dispatch);
@@ -91,6 +95,17 @@ class AllBooks extends Component {
         asyncSendBookToMail(bookId, emailToSend);
     }
 
+    _onAddBook(bookId) {
+
+        if (!confirm('Вы действительно хотите добавить книгу в раздел "Мои книги"?')) {
+            return;
+        }
+
+        const {asyncAddBookToMyBooks} = this.props;
+
+        asyncAddBookToMyBooks(bookId);
+    }
+
     _onDeleteBook(bookId) {
 
         if (!confirm('Вы действительно хотите удалить книгу из раздела "Все книги"?\nКнига будет удалена безвозвратно и ее нельзя будет скачать.')) {
@@ -141,6 +156,7 @@ class AllBooks extends Component {
                 totalCount={totalCount}
                 controlMode="allbooks"
                 onSortChange={this._onSortChange.bind(this)}
+                onAddBook={this._onAddBook.bind(this)}
                 onSendMail={this._onSendMail.bind(this)}
                 onDeleteBook={this._onDeleteBook.bind(this)}
                 sortField={sortField}

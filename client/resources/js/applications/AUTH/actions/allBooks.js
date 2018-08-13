@@ -24,9 +24,43 @@ export const asyncGetAllBooks = (collection, actionData, queryData) => {
             dispatch({
                 type: actions.ALL_BOOKS_STOP_LOADING,
                 payload: {collection, ...filter, ...paging}
+            });
+        })
+        .catch((error) => {
+            console.log('error', error);
+            const {message, statusText} = error;
+            const errorMessage = statusText ? statusText : message;
+            dispatch({ type: actions.ALL_BOOKS_STOP_LOADING, payload: null });
+            dispatch({ type: actions.COMMON_ADD_GLOBAL_ERROR, payload: errorMessage });
+        });
+    }
+};
+
+export const asyncAddBookToMyBooks = (bookId) => {
+    return dispatch => {
+
+        const urlToSend = `${createUrl(defaultSettings, urlSettings['addToMyBooks'])}${bookId}`;
+
+        dispatch({
+            type: actions.ALL_BOOKS_START_LOADING,
+            payload: {}
+        });
+
+        Request.send({
+            url: urlToSend
+        })
+        .then( () => {
+
+            alert('Книга успешно добавлена в раздел "Мои книги".');
+
+            dispatch({ type: actions.ALL_BOOKS_STOP_LOADING, payload: null });
+            dispatch({
+                type: actions.MY_BOOKS_SET_DEFAULT,
+                payload: null
             })
         })
         .catch((error) => {
+
             console.log('error', error);
             const {message, statusText} = error;
             const errorMessage = statusText ? statusText : message;

@@ -27,6 +27,8 @@ export default function (state = null, action) {
             return {...returnState, ...payload, disabled: false, globalLoading: true};
         case actions.MY_BOOKS_SET_DEFAULT_SEARCH_TERM:
             return {...initialState, searchTerm: payload};
+        case actions.ALL_BOOKS_SET_DEFAULT:
+            return {...initialState};
         default:
             return returnState;
 

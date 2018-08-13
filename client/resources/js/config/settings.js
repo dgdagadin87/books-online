@@ -30,6 +30,7 @@ const urlSettings = {
     'getRawBook'   : '/api/getrawbook',
     'addRawBook'   : '/api/addrawbook',
     'editProfile'  : '/api/editprofile',
+    'addToMyBooks' : '/api/addtomybooks/',
 
     'getNotifyInfo': '/api/getnotifyinfo',
     'setNotifyRead': '/api/setnotifyread',
