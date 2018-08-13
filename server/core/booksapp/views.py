@@ -32,7 +32,7 @@ def gui_central(request, url='', id=None):
 
 @csrf_exempt
 def api_login(request):
-    return api_login_controller(request, BooksHelpers)
+    return api_login_controller(request)
 
 
 @csrf_exempt

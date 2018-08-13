@@ -1,9 +1,10 @@
+import json
 from django.http import JsonResponse
 from booksapp.models import Users
-import json
+from ...miscutils.sessions import BooksHelpers as helpers
 
 
-def api_login_controller(request, helpers):
+def api_login_controller(request):
 
     # Если метод не POST
     if request.method != 'POST':
