@@ -84,3 +84,8 @@ class Notifications(models.Model):
 		('download', 'download')
 	)
 	status = models.CharField(max_length=10, choices=TYPE_CHOICES, default='download')
+	IS_READ_CHOICES = (
+		('yes', 'yes'),
+		('no', 'no')
+	)
+	is_read = models.CharField(max_length=3, choices=IS_READ_CHOICES, default='no')
