@@ -54,7 +54,7 @@ class Notifications extends Component {
         for (let i = 0; i < notifications.length; i++) {
 
             const currentItem = notifications[i];
-            notifyIds.push(currentItem['id']);
+            notifyIds.push(currentItem['notification_id']);
         }
 
         return notifyIds;
@@ -108,7 +108,7 @@ class Notifications extends Component {
 
         for (let i = 0; i < notifications.length; i++) {
             const currentItem = notifications[i];
-            const {id, bookId, bookName, type, status} = currentItem;
+            const {notification_id, bookId, bookName, type, status} = currentItem;
 
             let mainText;
 
@@ -120,7 +120,7 @@ class Notifications extends Component {
             }
 
             returnArray.push(
-                <tr key={id}>
+                <tr key={notification_id}>
                     <td className="notifications-prevent notifications__status-cell">
                         <div className={'notifications__status ' + status} />
                     </td>
