@@ -66,3 +66,21 @@ class Books_2_users(models.Model):
 	class Meta:
 		unique_together = ('book_id', 'user_id')
 
+
+class Notifications(models.Model):
+	notification_id = models.AutoField(primary_key=True)
+	STATUS_CHOICES = (
+		('success', 'success'),
+		('error', 'error')
+	)
+	status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='error')
+	cached_book_id = models.ForeignKey(
+		Cached_books,
+		on_delete=models.DO_NOTHING
+	)
+	book_name = models.CharField(max_length=200)
+	TYPE_CHOICES = (
+		('add', 'add'),
+		('download', 'download')
+	)
+	status = models.CharField(max_length=10, choices=TYPE_CHOICES, default='download')
