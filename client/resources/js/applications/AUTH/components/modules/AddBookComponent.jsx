@@ -9,8 +9,6 @@ import {createUrl} from '../../../../core/coreUtils';
 
 import Request from '../../../../core/request';
 
-import actions from '../../../../config/actions';
-
 import { changeTitle, setGlobalError } from '../../actions/common';
 import {
     asyncGetAddBook,
@@ -152,7 +150,8 @@ class AddBookComponent extends Component {
         Request.send({
             type: 'post',
             url: createUrl(defaultSettings, urlSettings[prefix + 'RawBook']),
-            data: JSON.stringify(queryData)
+            data: queryData,
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
         })
         .then( (response) => {
 
