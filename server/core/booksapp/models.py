@@ -78,6 +78,11 @@ class Notifications(models.Model):
 		Cached_books,
 		on_delete=models.CASCADE
 	)
+	user_id = models.ForeignKey(
+		Users,
+		on_delete=models.CASCADE,
+		default=-1
+	)
 	book_name = models.CharField(max_length=200)
 	TYPE_CHOICES = (
 		('add', 'add'),
