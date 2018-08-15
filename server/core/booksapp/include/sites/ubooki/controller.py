@@ -35,7 +35,7 @@ class UbookiCacheBook(object):
         config['authorId'] = BooksHelpers.get_author_id()
         config['annotation'] = BooksHelpers.get_annotation(self._name, self._author, self._genre)
 
-        soup = BeautifulSoup(response.text)
+        soup = BeautifulSoup(response.text, 'lxml')
         lines = soup.find('div', {'class','entry-content'})
         extracted_lines = lines.extract()
         pattern = re.compile(r'<script[\s\S]+?/script>')

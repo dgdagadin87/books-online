@@ -76,7 +76,7 @@ class Notifications(models.Model):
 	status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='error')
 	cached_book_id = models.ForeignKey(
 		Cached_books,
-		on_delete=models.DO_NOTHING
+		on_delete=models.CASCADE
 	)
 	book_name = models.CharField(max_length=200)
 	TYPE_CHOICES = (
