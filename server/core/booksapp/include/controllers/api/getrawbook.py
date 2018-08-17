@@ -71,7 +71,14 @@ class GetRawBookController(BaseController):
         is_read_for_adding = 'no'
 
         # Полный объект для добавления
-        notification_for_adding = Notifications(cached_book_id_id=book_id_for_adding, user_id_id=user_id_for_adding, book_name=book_name_for_adding, type=type_for_adding, status=status_for_adding, is_read=is_read_for_adding)
+        notification_for_adding = Notifications(
+            cached_book_id_id=book_id_for_adding,
+            user_id_id=user_id_for_adding,
+            book_name=book_name_for_adding,
+            type=type_for_adding,
+            status=status_for_adding,
+            is_read=is_read_for_adding
+        )
 
         try:
             notification_for_adding.save()
