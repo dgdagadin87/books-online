@@ -47,7 +47,7 @@ class AddBookPopup extends Component {
             const textContent = bookId ? 'Файл книги сформирован для скачивания.' : 'Начато формирование файла книги. По мере готовности Вам придет уведомление.';
 
             return (
-                <div className="main-addnewbook__modal-end">
+                <div className="main-addnewbook__modal-end" style={{padding:'10px'}}>
                     <div style={{paddingBottom:'25px'}}>{textContent}</div>
                     {bookId ? <button onClick={this._downloadHandler.bind(this)} className="button">Скачать книгу</button> : null}
                     <button className="button button-last" onClick={this._closeHandler.bind(this)}>Закрыть окно</button>
