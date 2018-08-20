@@ -130,7 +130,7 @@ class Notifications extends Component {
                     <td className="notifications-prevent notifications__panel-cell">
                         <a
                             target="_blank"
-                            href={createUrl(defaultSettings, urlSettings['downloadBook']) + bookId}
+                            href={createUrl(defaultSettings, urlSettings['downloadRawBook']) + bookId}
                             className="notifications-prevent notifications__download"
                         >
                             Скачать

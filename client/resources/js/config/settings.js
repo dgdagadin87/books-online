@@ -12,29 +12,30 @@ const pageSettings = {
 };
 
 const urlSettings = {
-    'common'       : '/api/common',
-    'login'        : '/api/login',
+    'common'          : '/api/common',
+    'login'           : '/api/login',
 
-    'myBooks'      : '/api/mybooks',
-    'allBooks'     : '/api/allbooks',
-    'users'        : '/api/users',
-    'toMail'       : '/api/sendtomail/',
-    'downloadBook' : '/api/download/',
-    'deleteMyBook' : '/api/deletemybook/',
-    'deleteBook'   : '/api/deletebook/',
-    'addUser'      : '/api/adduser',
-    'deleteUser'   : '/api/deleteuser/',
-    'getUser'      : '/api/getuser/',
-    'editUser'     : '/api/edituser/',
-    'getAddBook'   : '/api/addbook',
-    'getRawBook'   : '/api/getrawbook',
-    'addRawBook'   : '/api/addrawbook',
-    'editProfile'  : '/api/editprofile',
-    'addToMyBooks' : '/api/addtomybooks/',
+    'myBooks'         : '/api/mybooks',
+    'allBooks'        : '/api/allbooks',
+    'users'           : '/api/users',
+    'toMail'          : '/api/sendtomail/',
+    'downloadBook'    : '/api/download/',
+    'downloadRawBook' : '/api/downloadrawbook/',
+    'deleteMyBook'    : '/api/deletemybook/',
+    'deleteBook'      : '/api/deletebook/',
+    'addUser'         : '/api/adduser',
+    'deleteUser'      : '/api/deleteuser/',
+    'getUser'         : '/api/getuser/',
+    'editUser'        : '/api/edituser/',
+    'getAddBook'      : '/api/addbook',
+    'getRawBook'      : '/api/getrawbook',
+    'addRawBook'      : '/api/addrawbook',
+    'editProfile'     : '/api/editprofile',
+    'addToMyBooks'    : '/api/addtomybooks/',
 
-    'getNotifyInfo': '/api/getnotifyinfo',
-    'setNotifyRead': '/api/setnotifyread',
-    'clearNotify'  : '/api/clearnotify'
+    'getNotifyInfo'   : '/api/getnotifyinfo',
+    'setNotifyRead'   : '/api/setnotifyread',
+    'clearNotify'     : '/api/clearnotify'
 };
 
 const getNotificationsPeriod =  60 * 1000;
