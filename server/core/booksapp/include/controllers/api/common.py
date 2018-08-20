@@ -1,4 +1,4 @@
-from ...abstract.base_controller2 import BaseController
+from .getnotifyinfo import GetNotifyInfoController
 
 
 def api_common_controller(request):
@@ -7,9 +7,12 @@ def api_common_controller(request):
     return main_controller.run()
 
 
-class CommonController(BaseController):
+class CommonController(GetNotifyInfoController):
 
     def run(self):
+
+        self._error_message = 'Произошла непредвиденная ошибка (общее)'
+        self._only_return = True
 
         # Базовые проверки
         self.base_checks()
@@ -26,25 +29,17 @@ class CommonController(BaseController):
                 'userName': user_info.user_name,
                 'userIsAdmin': user_is_admin
             },
-            'notifications': self._get_notifications(),
+            'notifications': self._get_notifications_object(),
             'title': self._get_title()
         }
 
         # Возврат
         return self.response_to_client(return_object)
 
-    def _get_notifications(self):
+    def _get_notifications_object(self):
         return {
-            'notReadCount': 1,
-            'notifications': [
-                {
-                    'id': 1,
-                    'status': 'success',
-                    'bookId': 11,
-                    'bookName': 'Синий мопс счастья',
-                    'type': 'add'
-                }
-            ]
+            'notReadCount': self._set_unread_notifications_number(),
+            'notifications': self._set_notifications_list()
         }
 
     def _get_title(self):

@@ -13,6 +13,7 @@ class GetNotifyInfoController(BaseController):
     def run(self):
 
         self._error_message = 'Произошла непредвиденная ошибка (уведомления)'
+        self._only_return = False
 
         # Базовые проверки
         self.base_checks()
@@ -57,6 +58,9 @@ class GetNotifyInfoController(BaseController):
                 'type': current_notification.type
             })
 
+        if self._only_return:
+            return notifications_list
+
         self._return_object['notifications'] = notifications_list
 
     @error_decorator
@@ -74,5 +78,8 @@ class GetNotifyInfoController(BaseController):
 
         if unread_count > 20:
             unread_count = 20
+
+        if self._only_return:
+            return unread_count
 
         self._return_object['notReadCount'] = unread_count
