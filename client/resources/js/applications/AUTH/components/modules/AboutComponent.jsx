@@ -61,14 +61,13 @@ class About extends Component {
                                 Клиентская часть:
                                 <a target="_blank" href={'https://reactjs.org/'}>React JS 16.2.0</a>,
                                 <a target="_blank" href={'https://www.npmjs.com/package/react-router'}>React Router 4.2.0</a>,
+                                <a target="_blank" href={'https://redux.js.org/'}>Redux 4.0.0</a>,
                                 <a target="_blank" href={'https://jquery.com/'}>JQuery 3.2.1</a>,
-                                <a target="_blank" href={'https://jqueryui.com/'}>JQuery UI 1.12.1</a>,
-                                <a target="_blank" href={'http://underscorejs.org/'}>Underscore 1.8.3</a>
                             </li>
                             <li style={{paddingTop:'5px'}}>
                                 Серверная часть:
                                 <a target="_blank" href={'https://www.python.org/'}>Python 3.6.4</a>,
-                                <a target="_blank" href={'https://github.com/django/django'}>Django 2.0.2</a>,
+                                <a target="_blank" href={'https://github.com/django/django'}>Django 2.0.7</a>,
                                 <a target="_blank" href={'https://dev.mysql.com/'}>MySQL Community Server 5.7.21</a>
                             </li>
                         </ul>
