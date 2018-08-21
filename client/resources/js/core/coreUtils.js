@@ -31,4 +31,16 @@ function createUrl (settings, url) {
     return url;
 }
 
-export {isEmpty, createUrl, applyParams, emptyFunction, checkEmail};
+function prepareNotifications (notifications) {
+    let notyList = [];
+
+    for (let i = 0; i < notifications.length; i++) {
+        let currentItem = notifications[i];
+        currentItem['isRead'] = 'yes';
+        notyList.push(currentItem);
+    }
+
+    return notyList;
+}
+
+export {isEmpty, createUrl, applyParams, emptyFunction, checkEmail, prepareNotifications};

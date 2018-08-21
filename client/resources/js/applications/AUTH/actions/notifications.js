@@ -1,6 +1,6 @@
 import actions from '../../../config/actions';
 import Request from '../../../core/request';
-import {createUrl} from '../../../core/coreUtils';
+import {createUrl, prepareNotifications} from '../../../core/coreUtils';
 import {defaultSettings, urlSettings} from '../../../config/settings';
 
 export const toggleDisplayList = (displayList) => {
@@ -38,7 +38,7 @@ export const setNotificationsData = () => {
     }
 };
 
-export const setNotificationsRead = (notificationIds) => {
+export const setNotificationsRead = (notificationIds, notifications) => {
     return dispatch => {
 
         const urlToSend = `${createUrl(defaultSettings, urlSettings['setNotifyRead'])}`;
@@ -50,9 +50,11 @@ export const setNotificationsRead = (notificationIds) => {
         })
         .then( () => {
 
+            const preparedNotifications = prepareNotifications(notifications);
+
             dispatch({
                 type: actions.NOTIFICATIONS_SET_DATA,
-                payload: {notReadCount: 0}
+                payload: {notReadCount: 0, notifications: preparedNotifications}
             });
         })
         .catch((error) => {

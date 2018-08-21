@@ -1159,6 +1159,9 @@ body {
     padding: 4px 3px 4px 3px;
     border-bottom: 1px solid #cccccc;
 }
+.notifications__table tbody > tr.not-read td {
+    background: #fcf8e3;
+}
 .notifications__table tr:last-child td {
     border-bottom: none;
 }

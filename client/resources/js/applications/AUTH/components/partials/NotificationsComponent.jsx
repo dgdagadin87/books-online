@@ -62,13 +62,13 @@ class Notifications extends Component {
 
     _toggleDisplayList(value) {
 
-        const {toggleDisplayList, setNotificationsRead} = this.props;
+        const {notifications, toggleDisplayList, setNotificationsRead} = this.props;
         const notifyIds = this._getNotificationsIds();
 
         toggleDisplayList(value);
 
         if (!value) {
-            setNotificationsRead(notifyIds);
+            setNotificationsRead(notifyIds, notifications);
         }
     }
 
@@ -117,7 +117,7 @@ class Notifications extends Component {
 
         for (let i = 0; i < notifications.length; i++) {
             const currentItem = notifications[i];
-            const {notification_id, bookId, bookName, type, status} = currentItem;
+            const {notification_id, bookId, bookName, type, status, isRead} = currentItem;
 
             let mainText;
 
@@ -129,7 +129,7 @@ class Notifications extends Component {
             }
 
             returnArray.push(
-                <tr key={notification_id}>
+                <tr className={isRead === 'no' ? 'not-read' : ''} key={notification_id} title={isRead === 'no' ? 'новое уведомление' : ''}>
                     <td className="notifications-prevent notifications__status-cell">
                         <div className={'notifications__status ' + status} />
                     </td>
