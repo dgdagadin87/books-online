@@ -71,8 +71,8 @@ export const clearNotifications = (notificationIds) => {
 
         Request.send({
             url: urlToSend,
-            type: 'post',
-            data: JSON.stringify({notificationIds})
+            data: {ids: JSON.stringify(notificationIds)},
+            type: 'get'
         })
         .then( () => {
 
