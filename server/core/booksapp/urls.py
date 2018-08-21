@@ -30,7 +30,7 @@ urlpatterns = [
 
 	url(r'^api/getnotifyinfo',               views.api_getnotifyinfo, name='api_getnotifyinfo'),
 	url(r'^api/setnotifyread',               views.api_setnotifyread, name='api_setnotifyread'),
-	url(r'^api/clearnotify',              	 views.api_setnotifyread, name='api_clearnotify'),
+	url(r'^api/clearnotify',              	 views.api_clearnotify, name='api_clearnotify'),
 
 	url(r'^test/gettestbook',                views.test_gettestbook, name='test_gettestbook'),
 ]
