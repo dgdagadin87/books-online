@@ -55,7 +55,8 @@ class GetNotifyInfoController(BaseController):
                 'bookId': current_notification.cached_book_id_id,
                 'bookName': current_notification.book_name,
                 'status': current_notification.status,
-                'type': current_notification.type
+                'type': current_notification.type,
+                'isRead': current_notification.is_read
             })
 
         if self._only_return:
