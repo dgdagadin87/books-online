@@ -22,6 +22,7 @@ from .include.controllers.api.downloadrawbook import api_downloadrawbook_control
 from .include.controllers.api.addrawbook import api_addrawbook_controller
 from .include.controllers.api.getnotifyinfo import api_getnotifyinfo_controller
 from .include.controllers.api.setnotifyread import api_setnotifyread_controller
+from .include.controllers.api.clearnotify import api_clearnotify_controller
 from .include.controllers.test.gettestbook import test_gettestbook_controller
 
 
@@ -132,6 +133,11 @@ def api_getnotifyinfo(request):
 @csrf_exempt
 def api_setnotifyread(request):
     return api_setnotifyread_controller(request)
+
+
+@csrf_exempt
+def api_clearnotify(request):
+    return api_clearnotify_controller(request)
 
 
 @csrf_exempt
