@@ -42,7 +42,7 @@ class GetNotifyInfoController(BaseController):
         notifications_list = []
 
         try:
-            collection = Notifications.objects.filter(user_id_id=user_id).order_by('-notification_id')[20]
+            collection = Notifications.objects.filter(user_id_id=user_id).order_by('-notification_id')[0:20]
         except Exception as e:
             print(e)
             self._set_response_error(message=self._error_message)
@@ -51,8 +51,8 @@ class GetNotifyInfoController(BaseController):
         for current_notification in collection:
 
             notifications_list.append({
-                'id': current_notification.book_id,
-                'bookId': current_notification.book_id,
+                'notification_id': current_notification.notification_id,
+                'bookId': current_notification.cached_book_id_id,
                 'bookName': current_notification.book_name,
                 'status': current_notification.status,
                 'type': current_notification.type
