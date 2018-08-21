@@ -83,6 +83,15 @@ class Notifications extends Component {
         this._toggleDisplayList(!displayList);
     }
 
+    _onRefreshClick(ev) {
+
+        ev.preventDefault();
+
+        const {setNotificationsData} = this.props
+
+        setNotificationsData();
+    }
+
     _onCloseClick(ev) {
 
         ev.preventDefault();
@@ -128,13 +137,16 @@ class Notifications extends Component {
                        {mainText}
                     </td>
                     <td className="notifications-prevent notifications__panel-cell">
-                        <a
-                            target="_blank"
-                            href={createUrl(defaultSettings, urlSettings['downloadRawBook']) + bookId}
-                            className="notifications-prevent notifications__download"
-                        >
-                            Скачать
-                        </a>
+                        {status === 'success' ?
+                            <a
+                                target="_blank"
+                                href={createUrl(defaultSettings, urlSettings['downloadRawBook']) + bookId}
+                                className="notifications-prevent notifications__download"
+                            >
+                                Скачать
+                            </a> :
+                            null
+                        }
                     </td>
                 </tr>
             );
@@ -168,8 +180,10 @@ class Notifications extends Component {
                 >
                     <div className="notifications__title">Список уведомлений</div>
                     <div className="notifications-prevent" style={{textAlign:'right', marginBottom:'10px'}}>
+                        <a onClick={this._onRefreshClick.bind(this)} className="notifications-prevent notifications__link" href="#">Обновить</a>
+                        &nbsp;&nbsp;
                         <a onClick={this._onClearClick.bind(this)} className="notifications-prevent notifications__link" href="#">Очистить</a>
-                        &nbsp;
+                        &nbsp;&nbsp;
                         <a onClick={this._onCloseClick.bind(this)} className="notifications-prevent notifications__link" href="#">Закрыть</a>
                     </div>
                     <div className="notifications__table-container">{this._renderNotifications()}</div>

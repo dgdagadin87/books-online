@@ -38,6 +38,6 @@ const urlSettings = {
     'clearNotify'     : '/api/clearnotify'
 };
 
-const getNotificationsPeriod =  60 * 1000;
+const getNotificationsPeriod =  300 * 1000;
 
 export {defaultSettings, pageSettings, urlSettings, getNotificationsPeriod};
