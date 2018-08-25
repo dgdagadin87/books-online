@@ -141,26 +141,7 @@ class AddRawBookController(BaseController):
 
         if book_exists is True:
             book_id = book_object.book_id
-
-            # Add book - start
-            try:
-                Books_2_users.objects.get(book_id_id=book_id, user_id_id=user_id)
-                self._add_notification(cached_book_id, name, 'success')
-            except Books_2_users.DoesNotExist:
-                pass
-            except Exception as e:
-                self._add_notification(-1, name, 'error')
-
-            book_for_adding = Books_2_users(book_id_id=book_id, user_id_id=user_id)
-
-            try:
-                book_for_adding.save()
-                latest_book = Books.objects.latest('book_id')
-                latest_id = latest_book.book_id
-                self._add_notification(cached_book_id, name, 'success')
-            except Exception as e:
-                self._add_notification(-1, name, 'error')
-            # Add book - end
+            self._add_book_to_user_callback(cached_book_id, book_id, name, user_id)
         else:
             short_description = BooksHelpers.get_annotation(name, author, genre)
             parent_site_id = 1  # Потом переделать
@@ -179,9 +160,27 @@ class AddRawBookController(BaseController):
                 book_for_saving.save()
                 latest_book = Books.objects.latest('book_id')
                 latest_id = latest_book.book_id
-                return self._add_book_to_user(latest_id, user_id)
+                self._add_book_to_user_callback(cached_book_id, latest_id, name, user_id)
             except Exception as e:
                 self._add_notification(-1, name, 'error')
+
+    def _add_book_to_user_callback(self, cached_book_id, book_id, name, user_id):
+
+        try:
+            Books_2_users.objects.get(book_id_id=book_id, user_id_id=user_id)
+            self._add_notification(cached_book_id, name, 'success')
+        except Books_2_users.DoesNotExist:
+            pass
+        except Exception as e:
+            self._add_notification(-1, name, 'error')
+
+        book_for_adding = Books_2_users(book_id_id=book_id, user_id_id=user_id)
+
+        try:
+            book_for_adding.save()
+            self._add_notification(cached_book_id, name, 'success')
+        except Exception as e:
+            self._add_notification(-1, name, 'error')
 
     def _add_notification(self, id, name, status):
 
@@ -194,7 +193,7 @@ class AddRawBookController(BaseController):
             book_name=name,
             type='add',
             status=status,
-            is_read=status
+            is_read='no'
         )
 
         try:
