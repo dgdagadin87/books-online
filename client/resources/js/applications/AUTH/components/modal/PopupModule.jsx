@@ -59,7 +59,7 @@ class AddBookPopup extends Component {
             const textContent = bookId ? 'Книга успешно добавлена в "Мои книги".' : 'Начато добавление книги в раздел "Мои книги". По мере готовности Вам придет уведомление.';
 
             return (
-                <div className="main-addnewbook__modal-end">
+                <div className="main-addnewbook__modal-end" style={{padding:'10px'}}>
                     <div style={{paddingBottom:'25px'}}>{textContent}</div>
                     <button
                         className="button"
