@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
+import $ from 'jquery';
+
 import {
     toggleDisplayList,
     setNotificationsData,
@@ -10,6 +12,7 @@ import {
 } from '../../actions/notifications';
 import {defaultSettings, urlSettings, getNotificationsPeriod} from '../../../../config/settings';
 import {createUrl} from '../../../../core/coreUtils';
+
 
 const mapStateToProps = (state) => {
     return {
@@ -74,7 +77,10 @@ class Notifications extends Component {
 
     _onBadgeClick (ev) {
 
-        if (ev.target.classList.contains('notifications-prevent')) {
+        /*if (ev.target.classList.contains('notifications-prevent')) {
+            return;
+        }*/
+        if ($(ev.target).hasClass('notifications-prevent')) {
             return;
         }
 

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import $ from 'jquery';
+
 import MenuLinkComponent from './MenuLinkComponent';
 import NotificationsComponent from '../partials/NotificationsComponent'
 
@@ -28,7 +30,10 @@ class Header extends Component {
 
     _handlerHidePopup(ev) {
 
-        if (ev.target.classList.contains('popup-prevent')) {
+        /*if (ev.target.classList.contains('popup-prevent')) {
+            return;
+        }*/
+        if ($(ev.target).hasClass('popup-prevent')) {
             return;
         }
 
